@@ -1,0 +1,1965 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Nunito:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #f4f6f3; /* Latar belakang putih kehijauan */
+    --text-color: #384338; /* Teks hijau sangat gelap */
+    --nav-bg: #3a5a40; /* Navigasi hijau hutan gelap */
+    --nav-text: #ffffff;
+    --green-dark: #2a482a; /* Judul hijau paling gelap */
+    --green-light: #a3b899; /* Aksen hijau pucat */
+    --wood-button: #588157; /* Tombol hijau lumut */
+    --wood-button-hover: #4a6e4a; /* Hover tombol */
+    --gold: #ffc107; /* Emas untuk ikon aktif */
+    /* Dinosaurus Theme */
+    --level-node: #fdd835; /* Warna telur/node yang bisa dimainkan */
+    --level-node-locked: #B0BEC5; /* Warna batu/node terkunci */
+    --level-node-current: #ff7043; /* Warna level aktif yang mencolok */
+    --level-node-border: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+h1, h2, h3, .nav-brand { font-family: 'Baloo 2', cursive; }
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 5%;
+    background-color: var(--nav-bg);
+    color: var(--nav-text);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.nav-brand {
+display: flex;
+align-items: center;
+}
+
+.nav-logo {
+height: 50px;
+margin-right: 10px; /* Tambahkan sedikit ruang antara logo dan teks */
+}
+
+.nav-links { list-style: none; display: flex; }
+.nav-links a {
+    color: var(--nav-text);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.2rem;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { background-color: var(--wood-button-hover); }
+
+.nav-icons { display: flex; align-items: center; gap: 0.5rem; }
+.nav-icons button {
+    background: none; border: none; color: var(--nav-text);
+    font-size: 1.4rem; padding: 0.5rem; cursor: pointer; transition: color 0.3s;
+}
+.nav-icons button:hover, .nav-icons button.active { color: var(--gold); }
+
+.home-image { width: auto; height: auto; max-width: 350px; max-height: 400px; margin: 1rem 0; border-radius: 20px; }
+
+main { padding: 2rem 5%; }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.content-box {
+    background: white; padding: 2.5rem;
+    border: 5px solid var(--wood-button);
+    border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 800px; margin: 2rem auto; text-align: center;
+}
+
+.materi-section { font-size: 1.1rem; text-align: left; margin-bottom: 2rem; }
+.materi-section h3 { font-size: 1.1rem; color: var(--green-dark); border-bottom: 2px solid var(--green-light); padding-bottom: 0.5rem; margin-bottom: 1rem;}
+.materi-section ul { font-size: 1.1rem; list-style-position: inside; }
+.formula { font-family: 'Courier New', monospace; background: #f0f0f0; padding: 0.5rem; border-radius: 5px; margin: 0.5rem 0; }
+
+.cta-button, #equation-form button {
+    background-color: var(--wood-button); color: white; border: none;
+    padding: 1rem 2rem; font-size: 1.2rem; font-weight: 700;
+    font-family: 'Baloo 2', cursive;
+    border-radius: 50px; cursor: pointer;
+    box-shadow: 0 4px 0 var(--wood-button-hover);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1rem;
+}
+.cta-button:hover, #equation-form button:hover { background-color: #947a72; }
+.cta-button:active, #equation-form button:active { transform: translateY(4px); box-shadow: 0 0 0 var(--wood-button-hover); }
+
+/* ============================================================ */
+/* STYLE BARU: HALAMAN HOME (HERO & CARDS)                      */
+/* ============================================================ */
+
+.hero-box-card {
+    width: 100%;
+    max-width: 2200px; 
+    margin: -80 auto 3rem auto;
+    aspect-ratio: 16 / 9; 
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                      url('assets/background.jpg'); /* Pastikan file sudah diganti nama jadi bg.jpg */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    border-radius: 0 0 60px 60px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    z-index: 1;
+}
+main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+.hero-content {
+    text-align: center;
+    /* DIRUBAH: Gunakan Flexbox untuk mengatur posisi atas-bawah */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Membuat tulisan di atas & tombol di bawah */
+    height: 80%; /* Menentukan seberapa jauh jarak antara tulisan dan tombol */
+    
+    padding: 0; 
+    background: transparent; /* DIHAPUS: Shadow kotak putih transparan hilang */
+    border-radius: 0;
+    margin-bottom: 0;
+    position: relative;
+}
+
+/* --- Penyesuaian Kotak Konten & Posisi --- */
+.hero-content h1 {
+    color: #ffffff !important; /* Warna Putih Murni */
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    /* Shadow gelap agar teks putih kontras dengan background terang */
+    text-shadow: 3px 3px 12px rgba(0,0,0,0.8); 
+    font-family: 'Baloo 2', cursive;
+    margin-top: 2rem; /* Membuat tulisan lebih ke atas */
+}
+/* Styling untuk tulisan kecil di bawah judul */
+.hero-description {
+    color: #ffffff;
+    font-size: 1.1rem; /* Ukuran teks lebih kecil dari judul */
+    max-width: 600px; /* Membatasi lebar agar teks tidak terlalu panjang ke samping */
+    margin: 0 auto 2rem auto; /* Memberi jarak bawah ke arah tombol */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8); /* Bayangan agar teks putih terlihat jelas */
+    line-height: 1.5; /* Memberi ruang antar baris */
+    font-weight: 500;
+}
+
+/* Sesuaikan kembali kontainer konten agar seimbang */
+.hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Mengubah ke center agar teks dan tombol berkumpul di tengah */
+    height: 95%;
+    padding: 20px;
+}
+/* --- Perbesar dan Turunkan Tombol --- */
+.cta-button {
+    /* Perbesar padding: 1.2rem (tinggi) dan 3rem (lebar) */
+    padding: 1.2rem 3rem; 
+    
+    /* Perbesar ukuran font tombol */
+    font-size: 1.3rem; 
+    
+    width: fit-content;
+    /* Margin auto tengah, dan margin-bottom kecil agar tombol benar-benar turun ke bawah */
+    margin: 0 auto 1rem auto; 
+    
+    border-radius: 50px;
+    background-color: var(--nav-bg);
+    color: white;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+    background-color: var(--wood-button-hover);
+}
+.tab-content {
+    display: none; /* Sembunyikan secara default */
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.tab-content.active {
+    display: block !important; /* Tampilkan jika aktif */
+    opacity: 1;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Card Styling */
+.home-card {
+    max-width: 2200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    transition: transform 0.3s ease;
+    gap: 40px;
+}
+
+.home-card:hover {
+    transform: translateY(-5px);
+}
+
+.light-green { background-color: #dcedc8; } 
+.dark-green { background-color: #aed581; }  
+.about-card { background-color: #f1f8e9; border: 2px dashed var(--wood-button); }
+
+.card-content {
+    display: flex;
+    align-items: center;
+    gap: 10rem;
+    text-align: left;
+}
+
+.card-icon {
+    width: 300px;
+    height: auto;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.1));
+}
+
+.card-text h2 {
+    color: var(--green-dark);
+    margin-bottom: 0.5rem;
+}
+
+.card-button {
+    background-color: white;
+    color: var(--green-dark);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 15px;
+    font-weight: bold;
+    font-family: 'Baloo 2', cursive;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+
+.card-button:hover {
+    background-color: var(--gold);
+    color: white;
+}
+
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* ============================================================ */
+/* LANJUT KE BAGIAN GAME                                        */
+/* ============================================================ */
+
+#game { text-align: center; }
+.game-info { margin-bottom: 1rem; }
+.game-info h2 { color: var(--green-dark); }
+
+#canvas-container {
+    width: 100%; max-width: 600px; height: 600px;
+    margin: 0 auto; border: 8px solid var(--nav-bg); border-radius: 15px;
+    background-image: url('assets/jungle-background.jpg');
+    background-size: cover; background-position: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.game-input { margin-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+#input-container { font-size: 1.8rem; font-family: 'Courier New', monospace; font-weight: bold; color: #333; }
+.equation-model { display: flex; align-items: center; gap: 0.5rem; display: none; }
+.box-input { width: 60px; height: 50px; border: 2px solid #888; border-radius: 8px; text-align: center; font-size: 1.5rem; font-weight: bold; font-family: 'Nunito', sans-serif; }
+.box-input:focus { outline: none; border-color: var(--gold); }
+
+#message-box { margin-top: 1rem; font-size: 1.2rem; font-weight: 600; min-height: 30px; }
+.success { color: #2e7d32; } .error { color: #c62828; }
+
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+.modal-content {
+    background-color: var(--bg-color);
+    margin: 5% auto;
+    padding: 2rem;
+    border: 5px solid var(--wood-button);
+    width: 90%;
+    max-width: 600px; /* Sedikit lebih lebar */
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    animation: slideIn 0.5s;
+}
+.modal-content h2 { text-align: center; margin-bottom: 1.5rem; color: var(--green-dark); }
+.modal-content .close-button { color: #aaa; position: absolute; top: 10px; right: 25px; font-size: 35px; font-weight: bold; cursor: pointer; }
+.modal-content .close-button:hover, .modal-content .close-button:focus { color: black; }
+/* --- 1. VIEW UTAMA (JUDUL LEBIH NAIK) --- */
+#game-map-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    /* Padding atas sangat tipis agar judul mepet ke atas */
+    padding: 10px 0 50px 0; 
+    background-color: #f8fbf8; 
+    width: 100vw;
+    min-height: 100vh;
+    border: none !important;
+    background: transparent !important;
+}
+/* --- CONTAINER UTAMA VIEW PETA --- */
+#game-map-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: flex-start;
+    padding: 40px 20px;
+    /* Latar belakang bersih, tidak ada kotak pembatas tambahan */
+    background-color: #f8fbf8; 
+    min-height: 100vh;
+}
+
+/* --- GRID CONTAINER (Tanpa Pembatas Samping) --- */
+#level-map-container {
+    display: grid;
+    /* 5 Kolom, memenuhi lebar yang tersedia */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 20px; /* Jarak antar kartu sedikit dirapatkan agar kartu lebih lebar */
+    padding: 10px;
+    /* Lebar maksimal diperbesar */
+    max-width: 1250px; 
+    width: 100%;
+    margin: 0 auto;
+    
+    /* PENTING: Menghilangkan background/border pembatas kontainer */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* --- STYLE KARTU LEVEL (PERSEGI 1:1) --- */
+.level-card {
+    /* KUNCI 1: Memaksa bentuk kartu menjadi Persegi Sempurna */
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    
+    background-color: #3a5a40; /* Hijau Tua */
+    border-radius: 25px;
+    /* Padding disesuaikan agar konten di dalam pas */
+    padding: 18px; 
+    
+    /* Menggunakan flex untuk menata konten di dalam persegi */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Menyebarkan konten secara vertikal */
+    
+    position: relative;
+    overflow: hidden;
+    border: 3px solid #4e7a55; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* --- AREA FOTO (Menyesuaikan sisa ruang di dalam persegi) --- */
+.level-photo-preview {
+    width: 100%;
+    /* Flex-grow 1 membuat foto mengisi sisa ruang di dalam kartu 1:1 */
+    flex-grow: 1; 
+    min-height: 0; /* Diperlukan untuk flex container */
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 18px;
+    margin-bottom: 12px; /* Jarak ke judul */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 2px solid rgba(251, 192, 45, 0.2);
+    position: relative;
+}
+
+.level-photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* Ikon Placeholder */
+.level-photo-preview .placeholder-icon {
+    font-size: 2.5rem; /* Ukuran ikon disesuaikan dengan kartu persegi */
+    color: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* --- JUDUL LEVEL (TIDAK TURUN BARIS) --- */
+.level-card h3 {
+    font-family: 'Baloo 2', cursive;
+    color: #fbc02d; /* Kuning Emas */
+    font-size: 1.5rem; 
+    margin: 0 0 5px 0; /* Margin bawah sedikit */
+    font-weight: 800;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    width: 100%;
+    text-align: center;
+
+    /* KUNCI 2: Mencegah tulisan turun ke baris kedua */
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; /* Menambah '...' jika teks terlalu panjang (safety) */
+}
+
+/* --- BINTANG --- */
+.card-stars {
+    display: flex;
+    gap: 5px;
+    /* Tinggi fix agar tidak mengganggu layout 1:1 */
+    height: 25px; 
+    align-items: center;
+}
+
+.card-stars i {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.card-stars i.active {
+    color: #fbc02d;
+    filter: drop-shadow(0 0 3px rgba(251, 192, 45, 0.8));
+}
+
+
+/* --- EFEK HOVER & RESPONSIVE --- */
+.level-card:hover:not(.locked) {
+    transform: translateY(-10px) scale(1.02);
+    border-color: #fbc02d;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+/* --- 4. EFEK SHADOW KUNING (LEVEL SAAT INI) --- */
+.level-card.current {
+    border-color: #fbc02d; /* Border ikut berubah jadi kuning emas */
+    /* Efek shadow kuning menyala sesuai permintaan */
+    box-shadow: 0 0 25px rgba(251, 192, 45, 0.8), 0 0 50px rgba(251, 192, 45, 0.4); 
+    transform: scale(1.05); /* Sedikit diperbesar agar menonjol */
+    z-index: 10;
+}
+/* Responsive untuk HP/Tablet agar kartu 1:1 tetap terlihat bagus */
+@media (max-width: 900px) {
+    #level-map-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
+        gap: 15px;
+    }
+    .level-card h3 { font-size: 1.3rem; }
+}
+
+@media (max-width: 600px) {
+    #level-map-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 Kolom di HP */
+        padding: 10px;
+    }
+    .level-card { padding: 12px; }
+    .level-card h3 { font-size: 1.2rem; }
+}
+/* --- CONTAINER UTAMA --- */
+.about-modern-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
+}
+
+/* Judul Gaya 'Ayo Belajar!' */
+.premium-title {
+    color: #3a5a40; /* Hijau Tua */
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-transform: none; /* Tidak auto-kapital */
+}
+
+.premium-subtitle {
+    color: #689f38;
+    font-size: 1.4rem;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+}
+
+/* --- GRID SYSTEM --- */
+.cards-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    perspective: 1000px;
+}
+
+/* STYLE KARTU PREMIUM */
+.premium-card {
+    background: #ffffff;
+    border-radius: 35px;
+    padding: 50px 30px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(58, 90, 64, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Aksen Warna di Atas Kartu */
+.card-top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(to right, #3a5a40, #dcedc8); /* Gradasi Hijau */
+}
+
+.premium-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 50px rgba(58, 90, 64, 0.15);
+    border-color: #3a5a40;
+}
+
+/* Efek Kartu Tengah yang Sedikit Lebih Menonjol */
+.premium-card.highlight {
+    background-color: #f9fdf9;
+    border: 2px solid #3a5a40;
+}
+
+/* IKON LINGKARAN */
+.card-icon-circle {
+    width: 85px;
+    height: 85px;
+    background: #3a5a40;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(58, 90, 64, 0.3);
+}
+
+.premium-card h3 {
+    color: #3a5a40;
+    font-size: 1.7rem;
+    margin-bottom: 15px;
+}
+
+.premium-card p {
+    color: #444;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.dev-name {
+    font-weight: 800;
+    color: #3a5a40;
+    font-size: 1.2rem !important;
+    margin-bottom: 10px !important;
+}
+
+.simple-footer {
+    margin-top: 60px;
+    opacity: 0.4;
+    font-weight: 600;
+    color: #3a5a40;
+}
+
+/* Responsif HP */
+@media (max-width: 900px) {
+    .cards-grid-container { grid-template-columns: 1fr; }
+    .premium-title { font-size: 2.5rem; }
+}
+
+/* Styling Kotak Petunjuk Kuning */
+.instruction-box {
+    background-color: #fff9c4;
+    border: 3px dashed #fbc02d; /* Garis putus-putus kuning */
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 600px;
+    text-align: center;
+    
+    /* Membuat SEMUA tulisan di dalam kotak menjadi TEBAL */
+    font-weight: bold; 
+    color: #384338;
+}
+
+.instruction-box p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+/* Menghilangkan sisa styling garis jika masih ada */
+.hint-divider {
+    display: none;
+}
+/* ============================================================
+   STYLING TOMBOL 'X' KEMBALI (SERAGAM DENGAN SIDEBAR)
+   ============================================================ */
+
+.btn-close-x {
+    /* 1. Posisi Tetap di Pojok Kanan Atas */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+
+    /* 2. Ukuran & Bentuk (Disamakan dengan tombol panah sidebar) */
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; /* Lingkaran sempurna */
+    border: none;       /* Tidak pakai border agar lebih bersih */
+    cursor: pointer;
+    
+    /* Alignment Ikon di tengah */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem; /* Ukuran ikon disesuaikan */
+    
+    /* 3. WARNA NORMAL (Hijau Tua) */
+    background-color: #3a5a40; /* Latar Hijau Tua */
+    color: #f1f8e9;            /* Ikon X Putih Krem (kontras) */
+    
+    /* 4. Efek Visual & Transisi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bayangan lembut */
+    /* Transisi hanya untuk warna dan ukuran, TANPA rotasi */
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+/* --- SAAT DISOROT (HOVER) --- */
+.btn-close-x:hover {
+    /* Berubah jadi Kuning Emas */
+    background-color: #fbc02d; 
+    /* Ikon berubah jadi Hijau Tua agar jelas di latar kuning */
+    color: #3a5a40;
+    
+    /* HANYA efek membesar sedikit, tidak berputar */
+    transform: scale(1.1); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* --- SAAT DITEKAN (ACTIVE) --- */
+.btn-close-x:active {
+    transform: scale(0.95); /* Efek tekan sedikit */
+    background-color: #f9a825;
+}
+/* Mengatur area header di dalam game */
+.game-header {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center; /* Membuat konten di dalamnya (judul) ke tengah */
+    align-items: center;
+}
+
+/* Membuat tulisan Level berada tepat di tengah */
+#level-title {
+    flex-grow: 1;
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    color: #2d5a27; /* Warna hijau gelap sesuai tema */
+    margin: 0;
+    text-align: center;
+}
+/* Styling Modal Kemenangan */
+.victory-content {
+    background-color: #f4f6f3;
+    border: 8px solid #3a5a40;
+    max-width: 450px;
+}
+
+.victory-banner {
+    background: #3a5a40;
+    color: white;
+    padding: 10px 40px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    display: inline-block;
+    border-radius: 0 0 20px 20px;
+    margin-top: -35px; /* Menempel ke atas modal */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.star-container.large .star {
+    font-size: 4rem; /* Bintang lebih besar di popup */
+    margin: 0 5px;
+}
+
+#victory-status-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    color: #ff7043;
+    margin: 20px 0;
+}
+
+.victory-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.cta-button.secondary {
+    background-color: #a3b899;
+}
+/* Container Bintang di Modal */
+#victory-stars {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    min-height: 80px; /* Menjaga tata letak saat bintang belum muncul */
+}
+
+/* Base style Bintang */
+#victory-stars .star {
+    font-size: 4.5rem;
+    color: #e0e0e0; /* Warna abu-abu dasar (bintang mati) */
+    text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    opacity: 0; /* Mulai dari tidak terlihat untuk animasi */
+    transform: scale(0);
+}
+
+/* Bintang Kuning Emas Aktif */
+#victory-stars .star.active {
+    color: #FFD700; /* Gold */
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 4px 8px rgba(0,0,0,0.2);
+    opacity: 1;
+    transform: scale(1);
+    animation: starAppear 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Animasi Bintang Muncul (Pop & Spin) */
+@keyframes starAppear {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.3) rotate(10deg); /* Efek memantul (overshoot) */
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+/* Container Judul */
+.intro-section {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.intro-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    color: #3a5a40;
+    margin-bottom: 20px;
+}
+
+/* Pembungkus Geser */
+.character-scroll-wrapper {
+    display: flex;
+    gap: 40px; /* Jarak antar card */
+    overflow-x: auto; /* Mengaktifkan geser horizontal */
+    padding: 30px 40px 60px 40px;
+    scroll-snap-type: x mandatory; /* Membuat geser berhenti pas di tengah kartu */
+    scrollbar-width: none; /* Menghilangkan scrollbar di Firefox */
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+}
+
+.character-scroll-wrapper::-webkit-scrollbar {
+    display: none; /* Menghilangkan scrollbar di Chrome/Safari */
+}
+
+/* Ukuran Kartu Diperbesar */
+.char-card {
+    flex: 0 0 350px; /* Ukuran lebar tetap agar bisa digeser */
+    scroll-snap-align: center;
+    border-radius: 25px;
+    padding: 40px 25px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.char-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* Gambar Karakter Tanpa Lingkaran Putih */
+.char-avatar {
+    width: 350px; /* Diperbesar */
+    height: 350px;
+    object-fit: contain;
+    margin-bottom: 25px;
+    background: transparent;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+}
+
+/* Teks Karakter Sesuai Permintaan (2.2rem & 1.05rem) */
+/* Pengaturan Nama Karakter di Semua Card */
+.char-info h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.2rem; /* Ukuran sesuai permintaan sebelumnya */
+    margin-bottom: 15px;
+    
+    /* WARNA KUNING UNTUK NAMA */
+    color: #FFD700; /* Kuning Emas (Gold) agar terlihat jelas di semua warna background */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sedikit bayangan agar nama tetap terbaca di kartu kuning pucat/putih */
+    
+    letter-spacing: 1px;
+    text-transform: uppercase; /* Membuat nama lebih tegas */
+}
+
+/* Khusus untuk kartu Kuning Pucat dan Putih, kita beri sedikit garis tepi tipis (stroke) 
+   agar teks kuning tidak mati di background terang */
+.pale-yellow-card .char-info h3, 
+.white-card .char-info h3 {
+    text-shadow: 1px 1px 0px #b8860b, -1px -1px 0px #b8860b, 1px -1px 0px #b8860b, -1px 1px 0px #b8860b;
+    color: #FFD700;
+}
+/* --- LOGIKA 3 WARNA HIJAU BERULANG --- */
+
+/* 1. Hijau Muda (Urutan ke 1, 4, 7...) */
+.char-card:nth-child(3n+1) {
+    background-color: #dcedc8; /* Hijau Paling Muda */
+    color: #2e3b23;
+}
+
+/* 2. Hijau Sedang (Urutan ke 2, 5, 8...) */
+.char-card:nth-child(3n+2) {
+    background-color: #aed581; /* Hijau Sedang */
+    color: #2e3b23;
+}
+
+/* 3. Hijau Tua (Urutan ke 3, 6, 9...) */
+.char-card:nth-child(3n) {
+    background-color: #3a5a40; /* Hijau Tua Navigasi */
+    color: #ffffff;
+}
+.pale-yellow-card { background-color: #fff9c4; color: #443d00; }
+
+.char-info p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.scroll-hint {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #888;
+    font-size: 0.9rem;
+}
+/* Animasi sederhana untuk petunjuk geser */
+@keyframes bounceX {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+}
+/* Container Utama disamakan lebarnya dengan Homepage */
+.materi-main-header {
+    text-align: center;
+    font-size: 40px;
+    color: #3A5A40; /* Hijau Tua sesuai instruksi sketsa */
+    font-family: 'Baloo 2', cursive;
+    margin-top: 30px;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+.materi-list-vertical {
+    display: flex;
+    flex-direction: column; /* Kartu menumpuk ke bawah, melebar ke samping */
+    gap: 5px;
+    max-width: 2200px; /* Lebar maksimal sesuai homepage */
+    margin: 1rem auto;
+    padding: 0 20px;
+}
+
+/* Card Styling identik dengan homepage */
+.home-card {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0;
+}
+
+.deep-green-item { background-color: #3a5a40; } /* Khusus kartu nomor 3 */
+
+.card-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem; /* Jarak antara icon dan teks disesuaikan */
+    text-align: left;
+    width: 100%;
+}
+
+.card-icon {
+    width: 350px; /* Ukuran icon buku/stik game disamakan */
+    height: auto;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.1));
+}
+
+/* Frame Detail (Saat materi dibuka) */
+.frame-materi-detail {
+    background: white;
+    border-radius: 30px;
+    border: 5px solid #3a5a40;
+    padding: 60px;
+    position: relative;
+    max-width: 1200px;
+    margin: 40px auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+/* Gaya Tulisan Equation */
+.equation-box-display {
+    background: #f9fdf9;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: center;
+    border: 2px dashed #3a5a40;
+    font-size: 1.8rem;
+    font-family: 'Times New Roman', serif;
+}
+/* Pastikan selector ini sama persis dengan yang ada di HTML */
+.deep-green-item { 
+    background-color: #3a5a40 !important; /* Hijau Tua sesuai instruksi */
+}
+
+/* Mengatur teks menjadi putih khusus untuk kartu hijau tua agar kontras */
+.deep-green-item .card-text h2, 
+.deep-green-item .card-text p {
+    color: #ffffff !important;
+}
+/* Container Utama Detail Materi */
+.frame-materi-detail {
+    background: white;
+    border-radius: 30px;
+    border: 5px solid #3a5a40;
+    padding: 50px;
+    position: relative; /* Dasar untuk posisi absolut karakter */
+    max-width: 1200px;
+    margin: 40px auto;
+    overflow: hidden;
+}
+/* Tombol X Pojok Kiri Atas Berwarna Merah */
+.btn-close-frame {
+    position: absolute;
+    top: 20px;
+    right: 20px; /* Posisi kanan atas */
+    background: #ff4d4d; /* Merah cerah */
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px; /* Bentuk kotak membulat sedikit */
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+    z-index: 20;
+    transition: background 0.2s;
+}
+
+.btn-close-frame:hover {
+    background: #cc0000; /* Warna merah lebih gelap saat disentuh */
+}
+
+/* Judul Center sesuai sketsa */
+.materi-header-center {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.materi-header-center h2 {
+    color: #3a5a40;
+    font-family: 'Baloo 2', cursive;
+    text-decoration: underline;
+    font-size: 2.2rem;
+}
+
+/* Penulisan Rumus (Equation) */
+.equation-box-light-green {
+    background: #dcedc8;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 15px 0;
+    text-align: center;
+    border: 3px dashed #fbc02d;
+    font-size: 1.5rem;
+    color: #1b2416;
+}
+.equation-box-pink {
+    background-color: #fce4ec !important; /* Pink Muda */
+    border: 3px dashed #f06292;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #1b2416;
+}
+
+/* Penjelasan Variabel */
+.explanation-list {
+    list-style-type: disc;
+    margin-left: 25px;
+    line-height: 1.8;
+}
+
+/* Gambar Karakter Interaktif */
+.char-img-materi {
+    position: absolute;
+    bottom: -15px;
+    right: 30px;
+    width: 200px;
+    filter: drop-shadow(8px 10px 15px rgba(0,0,0,0.25));
+    animation: floatingChar 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+/* Mengatur seluruh teks deskripsi di dalam frame materi */
+.materi-body-text p {
+    font-size: 1.1rem; /* Ukuran diperbesar dari standar */
+    line-height: 1.8;   /* Jarak antar baris agar tidak rapat */
+    color: #2e3b23;     /* Warna teks agar tetap tajam */
+    margin-bottom: 1.5rem;
+}
+
+/* Mengatur ukuran teks pada daftar penjelasan variabel */
+.explanation-list li {
+    font-size: 1.1rem; /* Ukuran poin-poin penjelasan juga diperbesar */
+    margin-bottom: 10px;
+}
+.step-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.fraction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.fraction-line {
+    width: 100%;
+    height: 2px;
+    background-color: #3a5a40;
+    margin: 4px 0;
+}
+
+.box-input {
+    width: 45px;
+    height: 35px;
+    text-align: center;
+    border: 2px solid #3a5a40;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: 'Baloo 2', cursive;
+    background: #f9fdf9;
+}
+
+.box-input:focus {
+    outline: none;
+    background: #fff;
+    border-color: #AED581;
+    box-shadow: 0 0 5px rgba(174, 213, 129, 0.5);
+}
+
+.math-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+.card-button {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.card-button:active {
+    transform: scale(0.95); /* Efek tertekan saat diklik */
+}
+
+.box-input {
+    transition: all 0.3s ease;
+}
+/* 1. Mencegah efek membal/overscroll di seluruh halaman */
+html, body {
+    overscroll-behavior-y: none; /* Mengunci geser berlebih atas-bawah */
+    overflow-x: hidden; /* Mencegah web goyang ke kanan-kiri */
+}
+.about-card {
+    /* ... properti warna dan border Anda yang sudah ada ... */
+    display: flex;
+    flex-direction: column; /* Mengatur elemen berurutan ke bawah */
+    align-items: center;    /* Menengahkan elemen secara horizontal */
+    justify-content: center;
+    text-align: center;     /* Menengahkan teks di dalam elemen */
+    padding: 3rem 2rem;
+}
+
+/* Memastikan info penulis tidak melar ke samping dan tetap di tengah */
+.author-info {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Membatasi lebar deskripsi agar tetap proporsional saat di tengah */
+.about-card p {
+    max-width: 800px; /* Menjaga teks tidak terlalu panjang ke samping */
+}
+
+/* --- Panduan Page Styling --- */
+/* Container Utama */
+.guide-container {
+    background: #ffffff;
+    padding: 40px !important;
+    max-width: 900px !important;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    text-align: left !important;
+}
+
+/* Hero Header */
+.guide-hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.hero-badge {
+    background: var(--gold);
+    color: var(--green-dark);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    color: var(--green-dark);
+    font-family: 'Baloo 2', cursive;
+}
+
+.hero-line {
+    height: 5px;
+    width: 60px;
+    background: var(--wood-button);
+    margin: 15px auto;
+    border-radius: 10px;
+}
+
+/* Card General */
+.guide-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+}
+
+.guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.guide-card h3 {
+    color: var(--green-dark);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Grid System */
+.guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.glass-card {
+    background: #fdfdfd;
+    border-left: 5px solid var(--wood-button);
+}
+
+/* Timeline */
+.step-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.step-number {
+    background: var(--green-dark);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* Star Badges */
+.star-badges-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.star-badge {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.star-badge.gold { background: #fff9e6; border: 2px solid #ffd700; }
+.star-badge.silver { background: #f5f5f5; border: 2px solid #c0c0c0; }
+.star-badge.bronze { background: #fff0e6; border: 2px solid #cd7f32; }
+
+.badge-stars { font-size: 1.5rem; margin-bottom: 5px; }
+
+/* Signature */
+.signature {
+    margin-top: 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .guide-grid { grid-template-columns: 1fr; }
+    .star-badges-container { flex-direction: column; }
+    .hero-title { font-size: 1.8rem; }
+}
+
+/* Container Utama */
+.practice-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.practice-card {
+    background-color: #e8f5e9; /* Warna hijau muda sesuai gambar */
+    border: 2px dashed #fbc02d; /* Border kuning dashed */
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Row dan Column untuk Math */
+.math-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Times New Roman', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.math-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling Pecahan (Fraction) */
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.frac-top {
+    border-bottom: 2px solid #333; /* Garis pembagi pecahan */
+    padding: 2px 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.frac-bottom {
+    padding: 2px 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Kotak Input di dalam Rumus */
+.math-input {
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-style: normal;
+}
+
+.math-input:focus {
+    border-color: #3a5a40;
+    outline: none;
+    box-shadow: 0 0 5px rgba(58, 90, 64, 0.3);
+}
+/* Container Utama Modal */
+.gradien-modal-content {
+    padding: 20px;
+    text-align: left;
+}
+
+.modal-title {
+    text-align: center;
+    color: #2a482a;
+    font-family: 'Baloo 2', cursive;
+    text-decoration: underline;
+    margin-bottom: 25px;
+}
+
+/* Pembungkus Rumus & Contoh */
+.formula-wrapper {
+    margin-bottom: 40px;
+}
+
+.formula-header {
+    font-size: 1.1rem;
+    color: #2a482a;
+    margin-bottom: 10px;
+}
+
+/* Box Rumus (Utama) */
+.formula-box-main {
+    background-color: #e8f5e9;
+    border: 2px dashed #fbc02d;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Box Contoh Soal (Di bawah Rumus) */
+.example-container {
+    background-color: #ffffff;
+    border-left: 5px solid #fbc02d; /* Aksen garis kuning samping */
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.example-title {
+    color: #3a5a40;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.example-text {
+    background-color: #f1f8e9;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.solution-steps ol {
+    padding-left: 20px;
+}
+
+.solution-steps li {
+    margin-bottom: 12px;
+}
+
+/* Penataan Matematika Manual */
+.math-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.frac-top {
+    border-bottom: 2px solid #333;
+    padding: 0 5px;
+}
+
+.frac-bottom {
+    padding: 0 5px;
+}
+
+/* Container Utama Modal */
+.gradien-modal-content {
+    padding: 20px;
+    text-align: left;
+}
+
+.modal-title {
+    text-align: center;
+    color: #2a482a;
+    font-family: 'Baloo 2', cursive;
+    text-decoration: underline;
+    margin-bottom: 25px;
+}
+
+/* Pembungkus Rumus & Contoh */
+.formula-wrapper {
+    margin-bottom: 40px;
+}
+
+.formula-header {
+    font-size: 1.1rem;
+    color: #2a482a;
+    margin-bottom: 10px;
+}
+
+/* Box Rumus (Utama) */
+.formula-box-main {
+    background-color: #e8f5e9;
+    border: 2px dashed #fbc02d;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #2a482a;
+}
+
+/* Box Contoh Soal (Di bawah Rumus) */
+.example-container {
+    background-color: #ffffff;
+    border-left: 5px solid #fbc02d; /* Aksen garis kuning samping */
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.example-title {
+    color: #3a5a40;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.example-text {
+    background-color: #f1f8e9;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.solution-steps ol {
+    padding-left: 20px;
+}
+
+.solution-steps li {
+    margin-bottom: 12px;
+    color: #333;
+}
+
+/* Penataan Matematika Manual */
+.math-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.frac-top {
+    border-bottom: 2px solid #333;
+    padding: 0 5px;
+}
+
+.frac-bottom {
+    padding: 0 5px;
+}
+/* --- GANTI BAGIAN LATIHAN DENGAN INI --- */
+
+/* Kotak Langkah (Light Green) - Sesuai Sketsa Ade */
+.equation-box-light-green {
+    background-color: #f1f8e9 !important; 
+    border: 2px solid #3a5a40; 
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Judul Langkah (Warna Kuning) - Sesuai Tema */
+.equation-box-light-green h3 {
+    color: #3a5a40 !important; 
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+.gradient-img-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.gradien-illustrasi {
+    width: 100%;
+    max-width: 300px; /* Ukuran gambar agar tidak terlalu besar di laptop */
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid rgba(0,0,0,0.05);
+    background: white; /* Memberi kontras jika gambar transparan */
+}
+
+/* Penyesuaian untuk HP */
+@media (max-width: 600px) {
+    .gradien-illustrasi {
+        max-width: 100%; /* Gambar memenuhi lebar kartu di HP */
+    }
+}
+/* --- DESAIN KOTAK SOAL PREMIUM (REVISI FINAL) --- */
+
+.soal-container {
+    position: relative;
+    max-width: 850px; /* Diperlebar agar sejajar dengan kotak materi */
+    width: 95%;
+    margin: 40px auto;
+    /* Gradien Hijau Tua Mewah */
+    background: linear-gradient(135deg, #3a5a40 0%, #2a482a 100%); 
+    border-radius: 20px;
+    border: 3px solid #fbc02d; /* Border Kuning Emas */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Efek bayangan timbul */
+    z-index: 1;
+}
+
+/* Badge SOAL Kuning Emas */
+.soal-badge {
+    position: absolute;
+    top: -22px; /* Posisi mengambang di atas kotak */
+    left: 30px;
+    background-color: #fbc02d; /* Kuning Emas Buku Panduan */
+    color: #3a5a40; /* Teks hijau tua agar kontras */
+    padding: 8px 35px;
+    border-radius: 12px;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    z-index: 10;
+}
+
+/* Teks Putih Bersih di Dalam Kotak */
+.soal-content {
+    padding: 45px 30px 35px 30px; /* Padding luas agar teks tidak sesak */
+    color: #ffffff !important;
+    font-size: 1.2rem; /* Ukuran teks diperbesar agar jelas */
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    text-align: center;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* Bayangan teks halus */
+}
+
+/* Penyesuaian Responsif untuk Layar Kecil */
+@media (max-width: 768px) {
+    .soal-content { font-size: 1.1rem; padding: 40px 20px 25px 20px; }
+    .soal-badge { left: 50%; transform: translateX(-50%); padding: 6px 25px; }
+}
+
+/* Container Pecahan & Input agar Sejajar */
+.step-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fraction-container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.fraction-line {
+    width: 100%;
+    height: 2px;
+    background-color: #3a5a40; /* Garis pecahan hijau tua */
+    margin: 4px 0;
+}
+
+/* Kotak Input Angka - Sesuai Desain Latihan */
+.box-input {
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    border: 2px solid #3a5a40; /* Border Kuning */
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Baloo 2', cursive;
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.box-input:focus {
+    border-color: #3a5a40;
+    background: #fffde7; /* Kuning sangat pucat saat diklik */
+    outline: none;
+}
+/* Container Navigasi */
+.slider-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Tombol Panah Geser */
+.nav-btn {
+    background: var(--gold); /* Kuning emas */
+    color: var(--nav-bg);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.nav-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Animasi Slide */
+.slide-animation {
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Kotak Soal Premium */
+.soal-premium-box {
+    position: relative;
+    background: linear-gradient(135deg, #3a5a40, #2a482a);
+    padding: 40px;
+    border-radius: 20px;
+    color: white;
+    width: 80%;
+    max-width: 800px;
+    border: 3px solid #fbc02d;
+}
+
+/* --- PERBAIKAN SCROLL TOUCHPAD & MOBILE --- */
+html, body {
+    /* UBAH: dari 'none' menjadi 'auto' agar gestur 2 jari diizinkan */
+    overscroll-behavior-y: auto; 
+    
+    /* TETAP: untuk mencegah scroll horizontal yang mengganggu */
+    overflow-x: hidden; 
+    
+    /* TAMBAHKAN: memastikan body bisa discroll secara vertikal */
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+}
+/* --- SIDEBAR PENGATURAN PREMIUM --- */
+.settings-sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px; /* Sembunyi di luar layar */
+    width: 330px;
+    height: 100%;
+    background-color: #3a5a40; /* Hijau Tua Utama */
+    color: white;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+    z-index: 3000;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); /* Efek slide smooth */
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Baloo 2', cursive; /* Gunakan font yang sedikit membulat */
+}
+
+.settings-sidebar.active {
+    right: 0;
+}
+
+/* Header Section */
+.settings-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.settings-header h2 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* Tombol Kembali Lingkaran */
+.btn-back-circle {
+    background-color: white;
+    color: #3a5a40;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.btn-back-circle:hover {
+    transform: scale(1.1);
+}
+
+/* Garis Pembatas Putih */
+.white-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3); /* Transparansi agar elegan */
+    margin: 20px 0;
+}
+
+/* Konten Pengaturan */
+.settings-section {
+    margin-bottom: 10px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px 0 35px; /* Menjorok ke dalam agar rapi */
+}
+
+.control-row span {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Switch Toggle (Sakelar Kuning) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 55px;
+  height: 28px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #b0bec5;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px; width: 22px;
+  left: 3px; bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider { background-color: #fbc02d; } /* Kuning Emas */
+input:checked + .slider:before { transform: translateX(27px); }
+
+/* Tombol Reset Putih Outlined */
+.reset-desc {
+    font-size: 0.95rem;
+    margin: 0 0 20px 35px;
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+.btn-reset-white {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 12px;
+    border-radius: 30px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-reset-white:hover {
+    background-color: white;
+    color: #3a5a40;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+}
+/* Kotak Isi Settings */
+.settings-group {
+    background: rgba(255, 255, 255, 0.7); /* Putih transparan agar light green tetap terlihat */
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #3a5a40;
+}
+
+.settings-group h3 {
+    font-size: 1.1rem;
+    color: #3a5a40;
+    margin-bottom: 15px;
+    font-family: 'Baloo 2', cursive;
+}
+
+/* Tombol Reset Premium */
+.reset-btn-premium {
+    background-color: #c62828;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.reset-btn-premium:hover {
+    background-color: #8e0000;
+}
+.nav-icons {
+    z-index: 1000; /* Pastikan berada di atas konten lain */
+}
+/* Pastikan elemen canvas p5.js tidak memblokir scroll vertikal */
+canvas {
+    touch-action: pan-y !important; /* Mengizinkan geser layar ke atas/bawah */
+}
+
+#canvas-container {
+    touch-action: pan-y;
+}
+

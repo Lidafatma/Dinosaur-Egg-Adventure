@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Telur Dinosaurus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-brand"> 
+            <img src="assets/logo.png" alt="Logo Game" class="nav-logo">
+            Petualangan Telur Dinosaurus
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-tab active" data-tab="home">Home</a></li>
+            <li><a href="#" class="nav-tab" data-tab="panduan">Panduan</a></li>
+            <li><a href="#" class="nav-tab" data-tab="materi">Materi</a></li>
+            <li><a href="#" class="nav-tab" data-tab="game">Game</a></li>
+            <li><a href="#" class="nav-tab" data-tab="about">Tentang</a></li>
+        </ul>
+        <div class="nav-icons">
+            <button id="help-button" aria-label="Bantuan"><i class="fas fa-lightbulb"></i></button>
+            <button id="music-toggle" aria-label="Musik"><i class="fas fa-music"></i></button>
+            <button id="sfx-toggle" aria-label="Efek Suara"><i class="fas fa-volume-up"></i></button>
+            <button id="settings-toggle" aria-label="Pengaturan"><i class="fas fa-cog"></i></button>   
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="tab-content active">
+            <div class="hero-box-card">
+                <div class="hero-content">
+                    <h1>SELAMAT DATANG DI DUNIA DINOSAURUS</h1>
+                    <p class="hero-description">
+                        Mari menjelajah bersama kami dalam mencari lokasi telur emas melalui teka-teki koordinat kartesius 
+                        dan konsep Persamaan Garis Lurus (PGL).
+                    </p>
+                    <button class="cta-button pulse" onclick="switchTab('game')">MULAI PETUALANGAN</button>
+                </div>
+            </div>
+            <div class="intro-section">
+                <h2 class="intro-title">Kenalan Dulu Yuk!</h2>
+                
+                <div class="character-scroll-wrapper">
+                    <div class="char-card light-green-card">
+                        <img src="assets\menunjukarah.png" alt="Ara" class="char-avatar">
+                        <div class="char-info">
+                            <h3>ARA</h3>
+                            <p><b>Tugas:</b> Si Penentu Arah Gradien. Ara akan membantumu memahami seberapa miring jalur petualanganmu!</p>
+                        </div>
+                    </div>
+
+                    <div class="char-card dark-green-card">
+                        <img src="assets\logo.png" alt="Diko" class="char-avatar">
+                        <div class="char-info">
+                            <h3>DIKO</h3>
+                            <p><b>Tugas:</b> Si Ahli Rumus. Diko bertugas menjelaskan konsep Persamaan Garis Lurus (PGL) agar peta penyelamatanmu akurat!</p>
+                        </div>
+                    </div>
+
+                    <div class="char-card light-green-card">
+                        <img src="assets/petualang.png" alt="Maya" class="char-avatar">
+                        <div class="char-info">
+                            <h3>MAYA</h3>
+                            <p><b>Tugas:</b> Si Penjelajah Utama. Kamu akan mengendalikan Maya untuk berjalan di hutan koordinat mencari telur emas!</p>
+                        </div>
+                    </div>
+
+                    <div class="char-card dark-green-card">
+                        <img src="assets/penjelajahpeta.png" alt="Reno" class="char-avatar">
+                        <div class="char-info">
+                            <h3>RENO</h3>
+                            <p><b>Tugas:</b> Si Pencari Clue. Reno akan memberikan petunjuk jika kamu merasa tersesat saat menghitung koordinat!</p>
+                        </div>
+                    </div>
+
+                    <div class="char-card light-green-card">
+                        <img src="assets/menunjukarah.png" alt="Ziva" class="char-avatar">
+                        <div class="char-info">
+                            <h3>ZIVA</h3>
+                            <p><b>Tugas:</b> Si Pendamping Setia. Ziva bertugas memastikan semua langkahmu sudah sesuai dengan rute penyelamatan!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-hint">Geser untuk melihat tim lainnya <i class="fas fa-arrow-right"></i></div>
+            </div> 
+           
+            <div class="home-card dark-green">
+                <div class="card-content">
+                    <img src="assets\light-bulb.png" alt="Logo Petunjuk" class="card-icon">
+                    <div class="card-text">
+                        <h2>PETUNJUK PERMAINAN</h2>
+                        <p>Pahami aturan main, misi penyelamatan, dan cara mendapatkan skor bintang tertinggi di sini!</p>
+                        <button class="card-button" onclick="switchTab('panduan')">LIHAT PANDUAN</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-card light-green">
+                <div class="card-content">
+                    <img src="assets\materi.png" alt="Logo Materi" class="card-icon">
+                    <div class="card-text">
+                        <h2>MATERI BELAJAR</h2>
+                        <p>Pelajari konsep Persamaan Garis Lurus (PGL) agar kamu bisa membuat jalur penyelamatan yang tepat!</p>
+                        <button class="card-button" onclick="switchTab('materi')">AYO BELAJAR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-card dark-green">
+                <div class="card-content">
+                    <img src="assets\game.png" alt="Logo Game" class="card-icon">
+                    <div class="card-text">
+                        <h2>PETA PETUALANGAN</h2>
+                        <p>Mulai misi pencarian telur emas di hutan koordinat. Gunakan rumusmu dan temukan harta karunnya!</p>
+                        <button class="card-button" onclick="switchTab('game')">AYO BERMAIN</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-card about-card center-about">
+                <h2>TENTANG KAMI</h2>
+                <p>Aplikasi ini dirancang sebagai media pembelajaran interaktif matematika untuk membantu siswa memahami grafik dan gradien garis lurus.</p>
+                <div class="author-info">
+                    <p><strong>Dibuat oleh:</strong></p>
+                    <p>Ade Ziyana Walidah Fatma</p>
+                    <p>Pendidikan Matematika</p>
+                    <p>Universitas PGRI Semarang</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="panduan" class="tab-content">
+            <div class="content-box guide-container">
+                
+                <header class="guide-hero">
+                    <div class="hero-badge">BUKU PANDUAN RESMI</div>
+                    <h1 class="hero-title">Petualangan Telur Dinosaurus</h1>
+                    <p class="hero-subtitle">Panduan Strategi & Penggunaan Media Pembelajaran</p>
+                    <div class="hero-line"></div>
+                </header>
+
+                <div class="guide-card intro-card">
+                    <div class="card-body">
+                        <h3><i class="fas fa-feather-alt"></i> Kata Pengantar</h3>
+                        <p>Puji syukur kami panjatkan ke hadirat Tuhan Yang Maha Esa. Buku panduan ini disusun sebagai pedoman bagi siswa SMP Kelas VIII untuk menaklukkan tantangan <b>Persamaan Garis Lurus (PGL)</b> melalui visualisasi petualangan yang nyata.</p>
+                        <p>Game ini merupakan bagian dari penelitian skripsi di program studi <b>Pendidikan Matematika, Universitas PGRI Semarang</b>.</p>
+                        <div class="signature">
+                            <span>Semarang, Januari 2026</span>
+                            <strong>Ade Ziyana Walidah Fatma</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-grid">
+                    <div class="guide-card glass-card">
+                        <h3><i class="fas fa-bullseye"></i> Tujuan Media</h3>
+                        <ul>
+                            <li>Memvisualisasikan Gradien (m) secara konkret.</li>
+                            <li>Melatih logika presisi dalam menentukan rute.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-card glass-card">
+                        <h3><i class="fas fa-rocket"></i> Manfaat Belajar</h3>
+                        <ul>
+                            <li>Memahami hubungan antar koordinat $(x, y)$.</li>
+                            <li>Meningkatkan kemampuan pemecahan masalah matematika.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-card">
+                    <h3><i class="fas fa-map-signs"></i> Langkah Menuju Kemenangan</h3>
+                    <div class="step-timeline">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-info"><strong>Materi:</strong> Kuasai rumus Persamaan Garis Lurus di menu materi.</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-info"><strong>Analisis:</strong> Lihat koordinat awal petualang dan target telur emas.</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-info"><strong>Input:</strong> Masukkan rumus presisi ke dalam kolom yang tersedia.</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-info"><strong>Eksekusi:</strong> Klik "Buat Peta!" dan selamatkan telur dinosaurus!.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-card star-section">
+                    <h3><i class="fas fa-award"></i> Sistem Peringkat Bintang</h3>
+                    <div class="star-badges-container">
+                        <div class="star-badge gold">
+                            <div class="badge-stars">⭐⭐⭐</div>
+                            <strong>SEMPURNA</strong>
+                            <span>0-2 Kesalahan</span>
+                        </div>
+                        <div class="star-badge silver">
+                            <div class="badge-stars">⭐⭐</div>
+                            <strong>BAGUS</strong>
+                            <span>3-6 Kesalahan</span>
+                        </div>
+                        <div class="star-badge bronze">
+                            <div class="badge-stars">⭐</div>
+                            <strong>CUKUP</strong>
+                            <span>> 6 Kesalahan</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="materi" class="tab-content">
+            <div class="materi-container">
+                <h2 class="materi-main-header" id="materi-title" style="text-align: center; font-size: 40px; color: #3A5A40; font-family: 'Baloo 2';">Ayo Belajar!</h2>
+                
+                <div id="materi-wrapper">
+                    <div id="materi-grid" class="materi-list-vertical">
+                        
+                        <div class="home-card deep-green-item materi-item">
+                            <div class="card-content">
+                                <img src="assets/iconmap.png" class="card-icon" alt="Icon Tujuan">
+                                <div class="card-text">
+                                    <h2 style="color: white;">Tujuan Pembelajaran</h2>
+                                    <p style="color: white;">Pahami capaian pembelajaran serta tujuan pembelajaran yang diperlukan untuk menuntaskan misi</p>
+                                    <button class="card-button" onclick="showDetail('tujuan')">PELAJARI</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home-card light-green materi-item">
+                            <div class="card-content">
+                                <img src="assets\iconteleskop.png" class="card-icon" alt="Icon PGL">
+                                <div class="card-text">
+                                    <h2>Pengertian Persamaan Garis Lurus</h2>
+                                    <p>Pelajari definisi dan bentuk umum dari PGL di sini!</p>
+                                    <button class="card-button" onclick="showDetail('pengertian')">PELAJARI</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="home-card dark-green materi-item">
+                            <div class="card-content">
+                                <img src="assets\iconmap.png" class="card-icon" alt="Icon Gradien">
+                                <div class="card-text">
+                                    <h2>Gradien</h2>
+                                    <p>Pahami konsep kemiringan garis dan cara menghitungnya.</p>
+                                    <button class="card-button" onclick="showDetail('gradien')">PELAJARI</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="home-card deep-green-item materi-item">
+                            <div class="card-content">
+                                <img src="assets\iconcalculate.png" class="card-icon" alt="Icon Rumus">
+                                <div class="card-text">
+                                    <h2 style="color: white;">Menentukan Persamaan Garis Lurus</h2>
+                                    <p style="color: white;">Cara membuat jalur penyelamatan menggunakan rumus sakti.</p>
+                                    <button class="card-button" onclick="showDetail('menentukan')">PELAJARI</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="home-card light-green materi-item">
+                            <div class="card-content">
+                                <img src="assets\iconbag.png" class="card-icon" alt="Icon Latihan">
+                                <div class="card-text">
+                                    <h2>Latihan</h2>
+                                    <p>Uji kemampuanmu sebelum memulai misi penyelamatan Dino!</p>
+                                    <button class="card-button" onclick="showDetail('latihan')">PELAJARI</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="materi-detail-view" class="frame-materi-detail" style="display: none;">
+                        <button class="btn-close-frame" onclick="hideDetail()">✖</button>
+                        <div id="materi-content-area"></div>
+                    </div>
+                </div>
+            </div>
+        </section>                
+           <section id="game" class="tab-content">
+            <div id="game-map-view" class="content-box">
+                <h2 class="game-main-header" id="game-title" style="text-align: center; font-size: 40px; color: #3A5A40; font-family: 'Baloo 2';">Ayo Berpetualang!</h2>
+                <div id="level-map-container">
+                    </div>
+            </div>
+
+            <div id="gameplay-view" style="display: none;">
+                <div class="game-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <button onclick="backToMap()" class="btn-close-x" aria-label="Kembali ke Peta">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h2 id="level-title">Level 1</h2>
+                </div>
+
+                <div id="hint-box" class="instruction-box">
+                    <p><strong><i class="fas fa-lightbulb"></i> Petunjuk:</strong></p>
+                    <p id="level-instruction">Lengkapi rumus di bawah ini!</p>
+                    <p>Titik awal: <b id="start-point-text"></b> | Titik Telur Emas: <b id="end-point-text"></b></p>
+                </div>
+
+                <div id="canvas-container"></div>
+
+                <div class="game-input">
+                    <div id="input-container">
+                        <div id="form-model-1" class="equation-model">y = <input type="text" id="m1-input" class="box-input"> x + <input type="text" id="c-input" class="box-input"></div>
+                        <div id="form-model-2" class="equation-model">y - <input type="text" id="y1-input" class="box-input"> = <input type="text" id="m2-input" class="box-input"> ( x - <input type="text" id="x1-input" class="box-input"> )</div>
+                    </div>
+                    <form id="equation-form"><button type="submit">JALANKAN!</button></form>
+                </div>
+                <div id="message-box"></div>
+            </div>
+        </section>
+        <audio id="sfx-star" src="assets\sfxStar.mp3"></audio>
+
+        <section id="about" class="tab-content">
+            <div class="about-modern-wrapper">
+                <div class="about-header-section">
+                    <h2 class="premium-title">Tentang Game Ini</h2>
+                    <p class="premium-subtitle">Media Pembelajaran Interaktif Matematika</p>
+                </div>
+
+                <div class="cards-grid-container">
+                    <div class="premium-card">
+                        <div class="card-top-accent"></div>
+                        <div class="card-icon-circle">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Misi Game</h3>
+                        <p><b>Petualangan Telur Dinosaurus</b> dirancang untuk membantu siswa memahami konsep <b>Persamaan Garis Lurus</b> secara mandiri melalui pengalaman bermain yang seru dan menantang.</p>
+                    </div>
+
+                    <div class="premium-card highlight">
+                        <div class="card-top-accent"></div>
+                        <div class="card-icon-circle">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Pengembang</h3>
+                        <p class="dev-name">Ade Ziyana Walidah Fatma</p>
+                        <p>Mahasiswa Pendidikan Matematika yang berfokus pada pengembangan media pembelajaran inovatif berbasis teknologi.</p>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="card-top-accent"></div>
+                        <div class="card-icon-circle">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Instansi</h3>
+                        <p><b>Universitas PGRI Semarang</b><br>
+                        Fakultas Pendidikan Matematika, Ilmu Pengetahuan Alam, dan Teknologi Informasi.</p>
+                    </div>
+                </div>
+
+                <div class="simple-footer">
+                    <p>© 2026 - Dinosaur Egg Adventure Project</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="help-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Cara Bermain</h2><ol><li>Perhatikan titik awal (posisi petualang) dan titik tujuan (telur emas) pada peta.</li><li>Hitunglah persamaan garis lurus yang menghubungkan kedua titik tersebut.</li><li>Isi kotak-kotak kosong pada rumus sesuai perhitunganmu.</li><li>Klik tombol 'Buat Peta!'. Jika benar, petualang akan berjalan mengikuti garismu menuju telur emas!</li></ol></div></div>
+    
+    <audio id="bg-music" src="assets/background-music.mp3" loop></audio>
+    <audio id="sfx-correct" src="assets/correct-answer.mp3"></audio>
+    <div id="settings-sidebar" class="settings-sidebar">
+        <div class="settings-header">
+            <button id="close-settings" class="btn-back-circle">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Pengaturan</h2>
+        </div>
+
+        <div class="white-divider"></div>
+
+        <div class="settings-content">
+            <div class="settings-section">
+                <div class="section-title">
+                    <i class="fas fa-music"></i> Kontrol Musik
+                </div>
+                <div class="control-row">
+                    <span>Musik</span>
+                    <label class="switch">
+                        <input type="checkbox" id="music-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="white-divider"></div>
+
+            <div class="settings-section">
+                <div class="section-title">
+                    <i class="fas fa-volume-up"></i> Kontrol Suara
+                </div>
+                <div class="control-row">
+                    <span>Suara</span>
+                    <label class="switch">
+                        <input type="checkbox" id="sfx-checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="white-divider"></div>
+
+            <div class="settings-section">
+                <div class="section-title">
+                    <i class="fas fa-history"></i> Reset Level
+                </div>
+                <p class="reset-desc">Reset semua level dan mulai petualangan dari level 1.</p>
+                <button id="reset-progress" class="btn-reset-white">
+                    <i class="fas fa-sync-alt"></i> Reset Seluruh Level
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <div id="victory-modal" class="modal">
+    <div class="modal-content victory-content">
+        <span class="close-button" id="victory-x">&times;</span>
+        <div class="victory-banner">LEVEL COMPLETE</div>
+        <h2 id="victory-level-title">Level 1</h2>
+        
+        <div id="victory-stars" class="star-container large">
+            </div>
+
+        <h3 id="victory-status-text">EXCELLENT</h3>
+
+        <div class="victory-buttons">
+            <button id="replay-btn" class="cta-button secondary">Replay</button>
+            <button id="next-level-modal-btn" class="cta-button">Next</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
