@@ -33,6 +33,29 @@ let wrongAttempts = 0;
         { start: {x: 9, y: 3}, end: {x: -6, y: -2}, solution: { m: 1/3, c: 0 } },// 24
         { start: {x: -4, y: -6}, end: {x: 8, y: 0}, solution: { m: 0.5, c: -4 } }// 25
     ];
+// Pastikan baris ini menggunakan ID yang sama dengan di HTML
+const loginForm = document.getElementById('login-form');
+
+if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Menahan agar halaman tidak refresh
+        
+        // Ambil data dari input
+        const noAbsen = document.getElementById('no-absen').value;
+        const nama = document.getElementById('nama-lengkap').value;
+        const kelas = document.getElementById('kelas').value;
+
+        // Simpan ke memori browser (localStorage)
+        localStorage.setItem('user_auth', JSON.stringify({ noAbsen, nama, kelas }));
+
+        // TUTUP MODAL
+        document.getElementById('login-modal').style.display = 'none';
+
+        // PENTING: Panggil fungsi untuk memulai game kamu di sini!
+        // Contoh: startGame() atau initGame()
+        mulaiPermainanUtama(); 
+    });
+}
 function switchTab(targetTab) {
         console.log("Mencoba pindah ke tab: " + targetTab);
 
@@ -1210,23 +1233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     };
-    // 1. Simpan Identitas Siswa saat Form di-submit
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const dataSiswa = {
-            noAbsen: document.getElementById('no-absen').value,
-            nama: document.getElementById('nama-lengkap').value,
-            kelas: document.getElementById('kelas').value
-        };
-        
-        // Simpan ke localStorage agar tidak hilang saat refresh
-        localStorage.setItem('user_auth', JSON.stringify(dataSiswa));
-        
-        // Sembunyikan Modal
-        document.getElementById('login-modal').style.display = 'none';
-        console.log("Siswa Login:", dataSiswa.nama);
-    });
-
+    
     
     // ========== EVENT LISTENERS ==========
     ui.tabs.forEach(tab => tab.addEventListener('click', (e) => { 
