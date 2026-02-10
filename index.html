@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Petualangan Telur Dinosaurus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,22 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
 <body>
+    <div id="login-modal" class="modal" style="display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.85); position: fixed; z-index: 9999; width: 100%; height: 100%;">
+        <div class="contextual-box" style="width: 90%; max-width: 400px; border-color: #3a5a40; background-color: #e8f5e9; text-align: center; padding: 30px; border-radius: 20px;">
+            <h2 style="color: #3a5a40; font-family: 'Baloo 2'; margin-bottom: 20px;">Halo Penjelajah! 🦖</h2>
+            <p style="margin-bottom: 20px;">Isi data dirimu sebelum memulai permainan!</p>
+            
+            <form id="login-form">
+                <input type="number" id="no-absen" placeholder="No. Absen" required style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 2px solid #3a5a40;">
+                <input type="text" id="nama-lengkap" placeholder="Nama Panjang" required style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 2px solid #3a5a40;">
+                <input type="text" id="kelas" placeholder="Kelas (Contoh: 8A)" required style="width: 100%; padding: 12px; margin-bottom: 25px; border-radius: 10px; border: 2px solid #3a5a40;">
+                
+                <button type="submit" class="cta-button" style="width: 100%; background-color: #3a5a40; color: white;">MULAI PETUALANGAN</button>
+            </form>
+        </div>
+    </div>
     <nav>
         <div class="nav-brand"> 
             <img src="assets/logo.png" alt="Logo Game" class="nav-logo">
@@ -27,10 +42,12 @@
             <li><a href="#" class="nav-tab" data-tab="about">Tentang</a></li>
         </ul>
         <div class="nav-icons">
+            <button id="ranking-button" aria-label="Papan Peringkat" onclick="bukaRanking()"><i class="fas fa-trophy"></i></button>
             <button id="help-button" aria-label="Bantuan"><i class="fas fa-lightbulb"></i></button>
             <button id="music-toggle" aria-label="Musik"><i class="fas fa-music"></i></button>
             <button id="sfx-toggle" aria-label="Efek Suara"><i class="fas fa-volume-up"></i></button>
             <button id="settings-toggle" aria-label="Pengaturan"><i class="fas fa-cog"></i></button>   
+            
         </div>
     </nav>
 
@@ -247,7 +264,7 @@
                                 <img src="assets\iconteleskop.png" class="card-icon" alt="Icon PGL">
                                 <div class="card-text">
                                     <h2>Pengertian Persamaan Garis Lurus</h2>
-                                    <p>Pelajari definisi dan bentuk umum dari PGL di sini!</p>
+                                    <p>Pelajari definisi dan bentuk umum dari Persamaan Garis Lurus di sini!</p>
                                     <button class="card-button" onclick="showDetail('pengertian')">PELAJARI</button>
                                 </div>
                             </div>
@@ -280,8 +297,19 @@
                                 <img src="assets\iconbag.png" class="card-icon" alt="Icon Latihan">
                                 <div class="card-text">
                                     <h2>Latihan</h2>
-                                    <p>Uji kemampuanmu sebelum memulai misi penyelamatan Dino!</p>
+                                    <p>Uji kemampuanmu sebelum memulai misi penyelamatan!</p>
                                     <button class="card-button" onclick="showDetail('latihan')">PELAJARI</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home-card deep-green-item materi-item" style="margin-bottom: 80px;">
+                            <div class="card-content">
+                                <img src="assets\iconpencil.png" class="card-icon" alt="Icon Kontekstual"
+                                    onerror="this.src='https://cdn-icons-png.flaticon.com/512/3209/3209989.png'; this.style.filter='drop-shadow(5px 5px 10px rgba(255,255,255,0.2))';">
+                                <div class="card-text">
+                                    <h2 style="color: white;">Persamaan Garis lurus dalam Masalah Kontekstual</h2>
+                                    <p style="color: white;">Tonton video penerapan Persamaan Garis Lurus di dunia nyata dan selesaikan misi penugasannya!</p>
+                                    <button class="card-button" onclick="showDetail('kontekstual')">PELAJARI</button>
                                 </div>
                             </div>
                         </div>
@@ -430,6 +458,20 @@
             </div>
         </div>
     </div>
+    <div id="ranking-modal" class="modal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8);">
+        <div class="contextual-box" style="width: 90%; max-width: 450px; margin: 50px auto; background-color: #e8f5e9; border-color: #3a5a40; border-radius: 20px; padding: 20px; position: relative;">
+            <span onclick="tutupRanking()" style="position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #3a5a40;">&times;</span>
+            
+            <h2 style="text-align: center; color: #3a5a40; font-family: 'Baloo 2';"><i class="fas fa-crown" style="color: #fbc02d;"></i> Penjelajah Terbaik</h2>
+            
+            <div style="max-height: 400px; overflow-y: auto; margin-top: 20px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tbody id="ranking-list">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
     <div id="victory-modal" class="modal">
@@ -448,6 +490,11 @@
             <button id="next-level-modal-btn" class="cta-button">Next</button>
         </div>
     </div>
+    <div id="trophy-button" onclick="bukaRanking()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #fbc02d; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 3px solid #fff;">
+    <i class="fas fa-trophy" style="font-size: 24px; color: #3a5a40;"></i>
+</div>
+
+
 </div>
 </body>
 </html>
