@@ -1962,4 +1962,86 @@ canvas {
 #canvas-container {
     touch-action: pan-y;
 }
+/* =========================================
+   TAMBAHAN STYLE UNTUK MATERI KONTEKSTUAL
+   ========================================= */
+
+/* 1. Agar Video YouTube Responsif (Menyesuaikan lebar layar) */
+.video-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%; /* Rasio 16:9 */
+    position: relative;
+    height: 0;
+    border-radius: 20px;
+    border: 4px solid #3a5a40; /* Bingkai Hijau Tua */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    margin-bottom: 35px;
+    background-color: #000;
+}
+
+.video-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+/* 2. Kotak Kontainer untuk Tugas dan Pengerjaan */
+.contextual-box {
+    background-color: #f1f8e9; /* Latar Hijau Muda Cerah */
+    border: 2px solid #3a5a40; /* Border Hijau Tua */
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    color: #2a482a;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Header di dalam kotak tugas */
+.contextual-box h3 {
+    color: #3a5a40;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    border-bottom: 2px dashed #a3b899;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* List soal cerita */
+.contextual-list {
+    margin-left: 20px;
+    margin-top: 15px;
+}
+.contextual-list li {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* 3. Area Textarea untuk Siswa Mengetik Jawaban */
+.submission-area {
+    width: 100%;
+    height: 200px; /* Area ketik cukup tinggi */
+    padding: 15px;
+    border: 3px solid #a3b899; /* Border Hijau Sedang */
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    resize: vertical; /* Bisa ditarik ke bawah */
+    margin-bottom: 20px;
+    background: #ffffff;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+/* Efek saat textarea diklik/fokus */
+.submission-area:focus {
+    outline: none;
+    border-color: #fbc02d; /* Berubah jadi Kuning Emas */
+    box-shadow: 0 0 10px rgba(251, 192, 45, 0.3);
+}
 
