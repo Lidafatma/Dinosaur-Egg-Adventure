@@ -120,6 +120,94 @@ function toggleMusic() {
             musicIcon.className = 'fa-solid fa-music';
         }
     }
+// 2. Fungsi untuk Mengirim Progres ke Google Sheets
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwJGJyTdxLR03N7Yi296F_WsHatjXdCTqBFPyeYOo-Irn06iQXNke1xf4DJQ2YiL_RkzQ/exec'; // Nanti kamu buat ini di Google Sheets
+        
+    function sinkronisasiData(level, bintang) {
+        const auth = JSON.parse(localStorage.getItem('user_auth'));
+        if (!auth) return;
+
+        
+        const formData = new FormData();
+        formData.append('noAbsen', auth.noAbsen);
+        formData.append('nama', auth.nama);
+        formData.append('kelas', auth.kelas);
+        formData.append('levelReached', level);
+        formData.append('starsEarned', bintang);
+
+        fetch(scriptURL, { method: 'POST', body: formData})
+        .then(response => console.log('Progres tersimpan!'))
+        .catch(error => console.error('Gagal sinkronisasi!', error));
+    }
+    function muatRanking() {
+        const rankingBody = document.getElementById('ranking-body');
+        rankingBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Memuat data...</td></tr>';
+
+        fetch(scriptURL) 
+            .then(response => response.json())
+            .then(data => {
+                rankingBody.innerHTML = '';
+                data.forEach((player, index) => {
+                    const row = `
+                        <tr style="border-bottom: 1px solid #dcedc8;">
+                            <td style="padding: 10px;">${index + 1}</td>
+                            <td style="padding: 10px;"><b>${player.nama}</b> <br> <small>${player.kelas}</small></td>
+                            <td style="padding: 10px; text-align: center;">${player.totalBintang} ⭐</td>
+                        </tr>
+                    `;
+                    rankingBody.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                rankingBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:red;">Gagal memuat ranking.</td></tr>';
+            });
+    }
+    
+function bukaRanking() {
+        document.getElementById('ranking-modal').style.display = 'block';
+        const list = document.getElementById('ranking-list');
+        list.innerHTML = '<tr><td style="text-align:center; padding:20px;">Mencari data penjelajah... 🦖</td></tr>';
+
+        fetch(scriptURL)
+            .then(response => response.json())
+            .then(data => {
+                list.innerHTML = '';
+                data.forEach((item, index) => {
+                    // Beri warna khusus untuk juara 1, 2, 3
+                    let medalColor = "";
+                    if (index === 0) medalColor = "#ffd700"; // Emas
+                    else if (index === 1) medalColor = "#c0c0c0"; // Perak
+                    else if (index === 2) medalColor = "#cd7f32"; // Perunggu
+
+                    const row = `
+                        <tr style="border-bottom: 1px solid #dcedc8; background: ${index < 3 ? 'rgba(255,255,255,0.5)' : 'transparent'}">
+                            <td style="padding: 15px 10px; width: 50px; text-align: center;">
+                                <span style="background: ${medalColor || '#3a5a40'}; color: ${medalColor ? '#333' : '#fff'}; width: 30px; height: 30px; display: inline-block; border-radius: 50%; line-height: 30px; font-weight: bold;">
+                                    ${index + 1}
+                                </span>
+                            </td>
+                            <td style="padding: 10px;">
+                                <b style="color: #3a5a40; font-size: 1.1rem;">${item.nama}</b><br>
+                                <small style="color: #666;">Kelas ${item.kelas}</small>
+                            </td>
+                            <td style="padding: 10px; text-align: right; color: #2e7d32; font-weight: bold;">
+                                ${item.totalBintang} ⭐
+                            </td>
+                        </tr>
+                    `;
+                    list.innerHTML += row;
+                });
+            })
+            .catch(err => {
+                list.innerHTML = '<tr><td style="text-align:center; color:red;">Gagal memuat peringkat. Pastikan internetmu aktif!</td></tr>';
+            });
+    }
+
+    function tutupRanking() {
+        document.getElementById('ranking-modal').style.display = 'none';
+    }
+    
 function showDetail(materiId) {
     const grid = document.getElementById('materi-grid');
     const detailView = document.getElementById('materi-detail-view');
@@ -168,11 +256,55 @@ function showDetail(materiId) {
             </div>
             
             <div class="materi-body-text">
-                <p>Persamaan Garis Lurus adalah suatu persamaan matematika yang jika direpresentasikan dalam bidang koordinat Kartesius akan membentuk sebuah grafik berupa garis lurus.</p>
-                
-                <p>Persamaan ini menunjukkan hubungan linear antara variabel x dan variabel y. Terdapat beberapa bentuk penulisan persamaan garis lurus yaitu:</p>
+                <h3>Pengetian Persamaan Garis Lurus</h3>
+                <p>Secara geometris, Persamaan Garis Lurus adalah sekumpulan titik-titik (x, y) yang memiliki perbandingan perubahan nilai y terhadap perubahan nilai x yang konstan. Konstanta perbandingan ini disebut sebagai gradien atau kemiringan garis. Secara aljabar, Persamaan Garis Lurus adalah persamaan tingkat pertama (linear) karena setiap variabelnya (x dan y) hanya berpangkat satu.</p>
+
+
+                <div class="sub-materi-section" style="margin-top: 40px;">
+                    <h3>Syarat-syarat Persamaan Garis Lurus</h3>
+                    <p>Berikut adalah syarat-syarat utama agar suatu persamaan dikatakan sebagai Persamaan Garis Lurus:</p>
+                    
+                    <div class="contextual-box" style="border-color: #dcedc8; background-color #dcedc8: ; text-align: left;">
+                        <ul style="list-style-type: none; padding-left: 0; margin: 0;">
+                            <li style="margin-bottom: 20px;">
+                                <b style="color: #3a5a40; font-size: 1.1rem;">1. Pangkat Tertinggi adalah Satu (Linear)</b><br>
+                                Syarat mutlak dari Persamaan Garis Lurus adalah variabelnya harus berpangkat satu. Jika variabel memiliki pangkat lebih dari satu atau pangkat negatif, maka grafiknya tidak akan berbentuk garis lurus.<br>
+                                <span style="color: #2e7d32; font-weight: bold;">Benar: $$y = 2x + 3$$</span><br>
+                                <span style="color: #c62828; font-weight: bold;">Salah: $$y = x^2 + 1$$ (ini adalah kurva parabola)</span>
+                            </li>
+                            
+                            <li style="margin-bottom: 20px;">
+                                <b style="color: #3a5a40; font-size: 1.1rem;">2. Terdiri dari Maksimal Dua Variabel</b><br>
+                                Dalam sistem koordinat dua dimensi (Kartesius), Persamaan Garis Lurus biasanya melibatkan variabel x dan y. Namun, sebuah persamaan tetap dianggap garis lurus meski hanya memiliki satu variabel, selama pangkatnya tetap satu.<br>
+                                Contoh: x = 5 (garis vertikal) atau y = -2 (garis horizontal).
+                            </li>
+
+                            <li style="margin-bottom: 20px;">
+                                <b style="color: #3a5a40; font-size: 1.1rem;">3. Memiliki Nilai Gradien (m) dan m tidak sama dengan 0</b><br>
+                                Persamaan Garis Lurus harus memiliki kemiringan atau gradien. Gradien ini menentukan seberapa miring garis tersebut terhadap sumbu x.<br>
+                                Dalam bentuk y = mx + c, nilai m adalah gradiennya.<br>
+                                Jika m = 0, garis akan mendatar (horizontal).
+                            </li>
+
+                            <li style="margin-bottom: 20px;">
+                                <b style="color: #3a5a40; font-size: 1.1rem;">4. Bentuk Umum Persamaan</b><br>
+                                Suatu persamaan harus dapat dimodifikasi atau dinyatakan dalam salah satu bentuk standar berikut:<br>
+                                Bentuk Eksplisit: $$y = mx + c$$<br>
+                                Bentuk Implisit: $$Ax + By + C = 0$$<br>
+                                <i>Catatan: A dan B tidak boleh keduanya nol secara bersamaan.</i>
+                            </li>
+
+                            <li>
+                                <b style="color: #3a5a40; font-size: 1.1rem;">5. Hubungan Perubahan yang Konstan</b><br>
+                                Secara geometris, syarat garis lurus adalah memiliki perbandingan perubahan yang tetap. Artinya, jika Anda mengambil dua titik sembarang pada garis tersebut, nilai perbandingan $$\\frac{\\Delta y}{\\Delta x}$$ (perubahan y dibagi perubahan x) akan selalu sama.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
                 <div class="sub-materi-section">
+                    <h3>Bentuk umum Persamaan Garis Lurus</h3>
+                    <p>Terdapat dua bentuk yang sering digunakan untuk menyatakan persamaan Garis Lurus:</p>
                     <h3>1) Bentuk Eksplisit</h3>
                     <div class="equation-box-light-green">
                         $$y = mx + c$$
@@ -239,7 +371,7 @@ function showDetail(materiId) {
             
             <div class="materi-body-text">
                 <h3>Pengetian Gradien</h3>
-                <p>Gradien (disimbolkan dengan m) merupakan konsep kunci dalam materi PGL. Gradien didefinisikan sebagai ukuran kemiringan atau kecondongan suatu garis lurus.</p> 
+                <p>Pada garis lurus, gradien merupakan ukuran dari kemiringan garis tersebut. Gradien didefinisikan sebagai perubahan nilai y dibagi perubahan nilai x pada garis lurus. Gradien dapat digunakan untuk menentukan arah dan tingkat kecuraman garis. Dalam matematika, gradien juga sering digunakan untuk menghitung kecepatan rata-rata perubahan suatu nilai terhadap waktu.Gradien menggambarkan seberapa curam (positif atau negatif) garis pada grafik. Jika gradien positif, maka garis akan cenderung naik dari kiri ke kanan. Jika gradien negatif, maka garis akan cenderung turun.</p> 
             </div>
 
             <div class="sub-materi-section">
@@ -263,7 +395,7 @@ function showDetail(materiId) {
                                         </div>
                                     </div>
                                 </li>
-                                <li><b>Hasil Akhir:</b> m = 3.</li>
+                                <li><b>Hasil Akhir:</b>$$ m = 3$$</li>
                             </ol>
                         </div>
                     </div>
@@ -298,7 +430,7 @@ function showDetail(materiId) {
                                         </div>
                                     </div>
                                 </li>
-                                <li><b>Hasil Akhir:</b> m = 3.</li>
+                                <li><b>Hasil Akhir:</b>$$ m = 3 $$</li>
                             </ol>
                         </div>
                     </div>
@@ -367,10 +499,10 @@ function showDetail(materiId) {
                             <p><b>Langkah-langkah:</b></p>
                             <ol>
                                 <li><b>Identifikasi:</b> Diketahui titik (x₁, y₁) = (2, 5) dan m = 3.</li>
-                                <li><b>Substitusi ke Rumus:</b> Gunakan rumus y - y₁ = m(x - x₁).</li>
-                                <li><b>Operasi Hitung:</b> y - 5 = 3(x - 2).</li>
-                                <li><b>Penyederhanaan:</b> y - 5 = 3x - 6.</li>
-                                <li><b>Hasil Akhir:</b> y = 3x - 1.</li>
+                                <li><b>Substitusi ke Rumus:</b> Gunakan rumus $$y - y₁ = m(x - x₁)$$</li>
+                                <li><b>Operasi Hitung:</b>$$ y - 5 = 3(x - 2)$$</li>
+                                <li><b>Penyederhanaan:</b>$$y - 5 = 3x - 6$$</li>
+                                <li><b>Hasil Akhir:</b>$$y = 3x - 1$$</li>
                             </ol>
                         </div>
                     </div>
@@ -404,9 +536,9 @@ function showDetail(materiId) {
                                             = 4
                                         </div>
                                     </li>
-                                    <li><b>Substitusi:</b> Gunakan titik A(1, 2) dan m = 4 ke rumus y - y₁ = m(x - x₁).</li>
-                                    <li><b>Hitung:</b> y - 2 = 4(x - 1) &rarr; y - 2 = 4x - 4.</li>
-                                    <li><b>Hasil Akhir:</b> y = 4x - 2.</li>
+                                    <li><b>Substitusi:</b> Gunakan titik A(1, 2) dan m = 4 ke rumus $$y - y₁ = m(x - x₁)$$</li>
+                                    <li><b>Hitung:</b> $$y - 2 = 4(x - 1) &rarr; y - 2 = 4x - 4.$$</li>
+                                    <li><b>Hasil Akhir:</b> $$y = 4x - 2$$</li>
                                 </ol>
                             </div>
                         </div>
@@ -437,8 +569,8 @@ function showDetail(materiId) {
                                             <div class="fraction"><span class="frac-top">x - 1</span><span class="frac-bottom">2</span></div>
                                         </div>
                                     </li>
-                                    <li><b>Perkalian Silang:</b> 2(y - 2) = 8(x - 1) &rarr; 2y - 4 = 8x - 8.</li>
-                                    <li><b>Hasil Akhir:</b> 2y = 8x - 4 atau y = 4x - 2.</li>
+                                    <li><b>Perkalian Silang:</b>$$ 2(y - 2) = 8(x - 1) &rarr; 2y - 4 = 8x - 8$$</li>
+                                    <li><b>Hasil Akhir:</b> $$2y = 8x - 4$$ atau $$ y = 4x - 2$$</li>
                                 </ol>
                             </div>
                         </div>
@@ -556,6 +688,97 @@ function showDetail(materiId) {
             </div>
 
             <img src="assets/penjelajahpeta.png" class="char-img-materi" alt="Orang Clue">
+        `;
+    } else if (materiId === 'kontekstual') {
+        html = `
+            <div class="materi-header-center">
+                <h2>Persamaan Garis Lurus dalam Masalah Kontekstual</h2>
+            </div>
+
+            <div class="materi-body-text">
+                <p style="text-align: center; font-size: 1.2rem;">Simak video di bawah ini untuk melihat bagaimana konsep Persamaan Garis Lurus digunakan di dunia nyata!</p>
+
+                <div class="video-responsive">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/WIXsqzwuMpM" 
+                        title="Video Pembelajaran Persamaan Garis Lurus" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="contextual-box">
+                    <h3><i class="fas fa-truck"></i> Masalah Kontekstual: Perjalanan Pak Robi</h3>
+                    <p class="example-text" style="background-color: #f1f8e9; padding: 15px; border-radius: 12px; border-left: 5px solid #3a5a40; font-style: italic; font-weight: bold; line-height: 1.6;">
+                        "Pak Robi mengendarai sebuah truk dengan kecepatan tetap 15 km/jam. Setelah 3 jam, pak Robi menempuh jarak 45 km."
+                    </p>
+                    
+                    <p><b>Pertanyaan:</b> Jika x adalah waktu (jam) dan y adalah jarak (km), tentukan persamaan garis lurusnya dan bagaimanakah grafik persamaannya sampai pak Robi menempuh jarak 90 km?</p>
+
+                    <div class="example-container" style="border-left: 5px solid #3a5a40; margin-top: 15px;">
+                        <h4 class="example-title">Kunci Jawaban & Pembahasan:</h4>
+                        <div class="solution-steps">
+                            <ol>
+                                <li>
+                                    <b>Identifikasi Variabel & Titik Koordinat:</b> <br>
+                                    Variabel x = waktu (jam) dan y = jarak (km). <br>
+                                    Diketahui pada jam ke-3 $$x_1 = 3$$,<br> jaraknya 45 km $$y_1 = 45$$. <br>
+                                    Maka titik koordinatnya adalah $$(3, 45)$$.
+                                </li>
+                                <li>
+                                    <b>Menentukan Gradien (m):</b> <br>
+                                    Dalam masalah kecepatan tetap, kecepatan tersebut adalah Gradien (m).<br>
+                                    $$m = 15$$
+                                </li>
+                                <li>
+                                    <b>Menyusun Persamaan (y = mx + c):</b> <br>
+                                    $$y - 45 = 15(x - 3)$$
+                                    $$y - 45 = 15x - 45$$
+                                    $$y = 15x - 45 + 45$$
+                                    Maka, persamaan garis lurusnya adalah: <b style="color: #2e7d32;">$$y = 15x$$</b>
+                                </li>
+                                <li>
+                                    <b>Analisis Grafik untuk Jarak 90 km:</b> <br>
+                                    Untuk mengetahui waktu saat mencapai jarak y = 90 km:<br>
+                                    $$90 = 15x$$
+                                    $$x = \\frac{90}{15} = 6 \\text{ jam}$$
+                                    Jadi, grafik persamaan akan ditarik garis lurus mulai dari titik pusat $$(0,0)$$ hingga titik $$(6, 90)$$.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contextual-box">
+                    <h3><i class="fas fa-clipboard-list"></i> Studi Kasus: Pertumbuhan Tanaman</h3>
+                    <p class="example-text" style="background-color: #f1f8e9; padding: 15px; border-radius: 12px; border-left: 5px solid #3a5a40; font-style: italic; font-weight: bold; line-height: 1.6;">
+                        Seorang peneliti sedang mengamati pertumbuhan tanaman kacang hijau. Ia mencatat data berikut: <br>
+                        Pada hari ke-4 (x=4), tinggi tanaman adalah 12 cm (y=12).<br>
+                        Pada hari ke-4 (x=8), tinggi tanaman adalah 20 cm (y=12).<br>
+                        Asumsikan pertumbuhan tanaman tersebut konstan setiap harinya sehingga membentuk grafik garis lurus.<br></p>
+                                
+                    <ol class="contextual-list">
+                        <p><b>Pertanyaan:</b>
+                        <li>Tentukan persamaan garis lurus yang mewakili pertumbuhan tanaman tersebut!</li>
+                        <li>Berdasarkan persamaan yang kamu temukan, berapakah perkiraan tinggi tanaman pada <b>hari ke-15</b>?</li>
+                    </ol>
+                </div>
+
+                <div class="contextual-box" style="border-color: #fbc02d; background-color: #fffde7;"> <h3><i class="fas fa-pencil-alt" style="color: #f9a825;"></i> Lembar Pengerjaan</h3>
+                    <p>Tuliskan langkah-langkah penyelesaianmu secara rinci (Diketahui, Ditanya, Dijawab) pada kotak di bawah ini:</p>
+                    
+                    <textarea class="submission-area" placeholder="Ketik jawabanmu di sini...\n\nContoh:\n1. Diketahui:\n   Titik A(x1, y1) = (4, 12)\n   Titik B(x2, y2) = (8, 20)\n...\n"></textarea>
+                    
+                    <div style="text-align: right;">
+                        <button class="cta-button" onclick="alert('Jawaban berhasil disimpan! (Ini hanya simulasi, jawaban belum terkirim ke server).')">
+                            <i class="fas fa-paper-plane"></i> KIRIM JAWABAN
+                        </button>
+                    </div>
+                </div>
+            </div>
         `;
     }
 
@@ -897,6 +1120,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }, i * 350);
             }
+            if (window.lastSentLevel !== currentLevel) {
+                sinkronisasiData(currentLevel, finalStarsCount);
+                window.lastSentLevel = currentLevel; // Kunci agar hanya terkirim 1 kali
+            }
 
             // Logika Tombol Modal
             document.getElementById('replay-btn').onclick = () => {
@@ -983,6 +1210,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     };
+    // 1. Simpan Identitas Siswa saat Form di-submit
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const dataSiswa = {
+            noAbsen: document.getElementById('no-absen').value,
+            nama: document.getElementById('nama-lengkap').value,
+            kelas: document.getElementById('kelas').value
+        };
+        
+        // Simpan ke localStorage agar tidak hilang saat refresh
+        localStorage.setItem('user_auth', JSON.stringify(dataSiswa));
+        
+        // Sembunyikan Modal
+        document.getElementById('login-modal').style.display = 'none';
+        console.log("Siswa Login:", dataSiswa.nama);
+    });
+
     
     // ========== EVENT LISTENERS ==========
     ui.tabs.forEach(tab => tab.addEventListener('click', (e) => { 
