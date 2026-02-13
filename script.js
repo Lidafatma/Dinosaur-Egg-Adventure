@@ -1123,7 +1123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         p.draw = function() {
-            scale = p.width / 22; 
+            scale = p.width / 18; 
             origin = { x: p.width / 2, y: p.height / 2 };
             p.clear();
             drawGrid();
@@ -1136,13 +1136,13 @@ document.addEventListener('DOMContentLoaded', () => {
         function toScreen(coord) { return { x: origin.x + coord.x * scale, y: origin.y - coord.y * scale }; }
         
         function drawGrid() {
-            p.stroke(255, 255, 255, 80); p.strokeWeight(1);
+            p.stroke(255, 255, 255, 80); p.strokeWeight(1.5);
             for (let x = -10; x <= 10; x++) p.line(toScreen({x, y: -10}).x, toScreen({x, y: -10}).y, toScreen({x, y: 10}).x, toScreen({x, y: 10}).y);
             for (let y = -10; y <= 10; y++) p.line(toScreen({x: -10, y}).x, toScreen({x: -10, y}).y, toScreen({x: 10, y}).x, toScreen({x: 10, y}).y);
-            p.stroke(255, 255, 255, 150); p.strokeWeight(2);
+            p.stroke(255, 255, 255, 180); p.strokeWeight(3);
             p.line(origin.x, 0, origin.x, p.height); p.line(0, origin.y, p.width, origin.y);
-            p.noStroke(); p.fill(255); p.textAlign(p.CENTER, p.CENTER); p.textSize(12); p.textStyle(p.BOLD);
-            for (let x = -10; x <= 10; x++) if (x !== 0) p.text(x, toScreen({x, y: 0}).x, toScreen({x, y: 0}).y + 12);
+            p.noStroke(); p.fill(255); p.textAlign(p.CENTER, p.CENTER); p.textSize(18); p.textStyle(p.BOLD);
+            for (let x = -10; x <= 10; x++) if (x !== 0) p.text(x, toScreen({x, y: 0}).x, toScreen({x, y: 0}).y + 15);
             for (let y = -10; y <= 10; y++) if (y !== 0) p.text(y, toScreen({x: 0, y}).x - 12, toScreen({x: 0, y}).y);
         }
 
@@ -1153,8 +1153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             p.line(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y); 
         }
 
-        function drawCharacter(pos) { p.imageMode(p.CENTER); p.image(characterImg, pos.x, pos.y, 40, 40); }
-        function drawGoal(pos) { p.imageMode(p.CENTER); p.image(goalImg, pos.x, pos.y, 40, 40); }
+        function drawCharacter(pos) { p.imageMode(p.CENTER); p.image(characterImg, pos.x, pos.y, 60, 60); }
+        function drawGoal(pos) { p.imageMode(p.CENTER); p.image(goalImg, pos.x, pos.y, 60, 60); }
         
         function showVictory() {
             isAnimating = false;
