@@ -47,7 +47,7 @@
             <button id="music-toggle" aria-label="Musik"><i class="fas fa-music"></i></button>
             <button id="sfx-toggle" aria-label="Efek Suara"><i class="fas fa-volume-up"></i></button>
             <button id="settings-toggle" aria-label="Pengaturan"><i class="fas fa-cog"></i></button>   
-            
+            <button id="group-button" title="Aktivitas Peserta" onclick="bukaAktivitas()"><i class="fas fa-users"></i></button>
         </div>
     </nav>
 
@@ -470,6 +470,22 @@
                         </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div id="activity-modal" class="modal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
+        <div class="contextual-box" style="width:90%; max-width:400px; margin:15% auto; background:#e8f5e9; border:3px solid #3a5a40; border-radius:20px; padding:20px;">
+            <h2 style="text-align: center; color: #3a5a40; font-family: 'Baloo 2';">
+                <i class="fas fa-users"></i> Aktivitas Grup
+            </h2>
+            
+            <p style="text-align:center; background:#3a5a40; color:white; padding:5px; border-radius:20px; font-size:14px;">
+                <span id="total-online-count">0</span> Penjelajah sedang online
+            </p>
+
+            <div id="activity-list" style="max-height:300px; overflow-y:auto; margin-top:15px; padding-right:5px;">
+                </div>
+
+            <button onclick="document.getElementById('activity-modal').style.display='none'" style="width:100%; margin-top:15px; background:#3a5a40; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer; font-weight:bold;">TUTUP</button>
         </div>
     </div>
 
