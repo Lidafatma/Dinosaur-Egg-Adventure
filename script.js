@@ -56,6 +56,62 @@ if (loginForm) {
         mulaiPermainanUtama(); 
     });
 }
+// Fungsi mengirim sinyal aktif
+function kirimPing() {
+    const auth = JSON.parse(localStorage.getItem('user_auth'));
+    if (!auth) return;
+
+    fetch(scriptURL + '?action=ping&nama=' + encodeURIComponent(auth.nama) + '&kelas=' + auth.kelas, { method: 'POST' });
+}
+
+// Jalankan ping otomatis setiap 60 detik
+setInterval(kirimPing, 60000);
+
+function bukaAktivitas() {
+    // 1. Tampilkan modal aktivitas
+    document.getElementById('activity-modal').style.display = 'block';
+    
+    const list = document.getElementById('activity-list');
+    const totalCount = document.getElementById('total-online-count');
+    
+    list.innerHTML = '<p style="text-align:center;">Mengecek aktivitas teman-teman... 🔍</p>';
+    totalCount.textContent = "0";
+
+    // 2. Ambil data dari Google Sheets dengan parameter action=status
+    fetch(scriptURL + "?action=status")
+        .then(res => res.json())
+        .then(data => {
+            list.innerHTML = '';
+            let onlineNow = 0;
+
+            // 3. Urutkan agar yang online muncul di paling atas
+            data.sort((a, b) => b.isOnline - a.isOnline);
+
+            data.forEach(user => {
+                if (user.isOnline) onlineNow++;
+                
+                const statusColor = user.isOnline ? '#4caf50' : '#9e9e9e'; // Hijau jika online, abu jika offline
+                const statusGlow = user.isOnline ? 'box-shadow: 0 0 8px #4caf50;' : '';
+
+                list.innerHTML += `
+                    <div style="display:flex; align-items:center; background:white; margin-bottom:8px; padding:12px; border-radius:12px; border:1px solid #dcedc8;">
+                        <div style="width:12px; height:12px; border-radius:50%; background:${statusColor}; margin-right:15px; ${statusGlow}"></div>
+                        
+                        <div style="flex-grow: 1;">
+                            <b style="color: #3a5a40; display:block;">${user.nama}</b>
+                            <small style="color: #666;">Kelas ${user.kelas} • ${user.isOnline ? 'Sedang Belajar 🦖' : 'Sedang Istirahat'}</small>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 4. Update total user yang sedang online
+            totalCount.textContent = onlineNow;
+        })
+        .catch(err => {
+            list.innerHTML = '<p style="color:red; text-align:center;">Gagal memuat aktivitas. Periksa koneksi internet!</p>';
+        });
+}
 function switchTab(targetTab) {
         console.log("Mencoba pindah ke tab: " + targetTab);
 
@@ -230,6 +286,7 @@ function bukaRanking() {
     function tutupRanking() {
         document.getElementById('ranking-modal').style.display = 'none';
     }
+
     
 function showDetail(materiId) {
     const grid = document.getElementById('materi-grid');
@@ -1260,22 +1317,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ui.sfxCheckbox) ui.sfxCheckbox.checked = sfxOn;
 
     // --- LOGIKA RESET PROGRES (Hapus Bintang & Level) ---
-    if (ui.resetBtn) {
-        ui.resetBtn.onclick = () => {
-            const konfirmasi = confirm("Apakah kamu yakin ingin menghapus seluruh progres belajar dan mengulang dari level 1?");
-            
-            if (konfirmasi) {
-                // 1. Hapus semua data simpanan di browser
-                localStorage.clear(); 
-                
-                // 2. Tampilkan pesan berhasil
-                alert("Progres telah direset! Semua level terkunci kembali.");
-                
-                // 3. Muat ulang halaman agar peta level terupdate otomatis
-                location.reload(); 
-            }
-        };
-    }
+        if (ui.resetBtn) {
+            ui.resetBtn.onclick = () => {
+                const auth = JSON.parse(localStorage.getItem('user_auth'));
+                if (!auth) return;
+
+                if (confirm("Reset semua skor dan level kamu. mulai lagi dari awal?")) {
+                    // Panggil action reset_user ke Google Sheets
+                    fetch(scriptURL + "?action=reset_user&nama=" + encodeURIComponent(auth.nama), { method: 'POST' })
+                    .then(() => {
+                        // Hapus data lokal di browser
+                        localStorage.removeItem('unlockedLevel');
+                        for (let i = 1; i <= 25; i++) localStorage.removeItem(`level_${i}_stars`);
+                        
+                        alert("Berhasil! Sekarang kamu mulai dari awal.");
+                        location.reload(); 
+                    });
+                }
+            };
+        }
     if (ui.musicCheckbox) {
         ui.musicCheckbox.onchange = () => {
             // Panggil fungsi toggleMusic yang sudah kamu buat
