@@ -46,8 +46,9 @@
             <button id="help-button" aria-label="Bantuan"><i class="fas fa-lightbulb"></i></button>
             <button id="music-toggle" aria-label="Musik"><i class="fas fa-music"></i></button>
             <button id="sfx-toggle" aria-label="Efek Suara"><i class="fas fa-volume-up"></i></button>
+            <button id="group-button" title="Aktivitas Peserta" onclick="toggleActivitySidebar()"><i class="fas fa-users"></i></button>
             <button id="settings-toggle" aria-label="Pengaturan"><i class="fas fa-cog"></i></button>   
-            <button id="group-button" title="Aktivitas Peserta" onclick="bukaAktivitas()"><i class="fas fa-users"></i></button>
+            
         </div>
     </nav>
 
@@ -189,7 +190,7 @@
                     <div class="guide-card glass-card">
                         <h3><i class="fas fa-rocket"></i> Manfaat Belajar</h3>
                         <ul>
-                            <li>Memahami hubungan antar koordinat $(x, y)$.</li>
+                            <li>Memahami hubungan antar koordinat (x, y).</li>
                             <li>Meningkatkan kemampuan pemecahan masalah matematika.</li>
                         </ul>
                     </div>
@@ -402,8 +403,41 @@
         </section>
     </main>
 
-    <div id="help-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Cara Bermain</h2><ol><li>Perhatikan titik awal (posisi petualang) dan titik tujuan (telur emas) pada peta.</li><li>Hitunglah persamaan garis lurus yang menghubungkan kedua titik tersebut.</li><li>Isi kotak-kotak kosong pada rumus sesuai perhitunganmu.</li><li>Klik tombol 'Buat Peta!'. Jika benar, petualang akan berjalan mengikuti garismu menuju telur emas!</li></ol></div></div>
-    
+    <div id="help-modal" class="guide-overlay">
+        <div class="guide-card">
+            <button onclick="closeHelp()" class="modal-close-x">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="guide-header">
+                <i class="fas fa-map-marked-alt"></i>
+                <h2>CARA BERMAIN</h2>
+            </div>
+            
+            <div class="guide-body">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <p>Perhatikan posisi awal titik Maya dan titik Telur Emas pada koordinat kartesius.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <p>Pahami konsep gradien agar kalian bisa menentukan ke arah mana Maya harus bergerak dengan mempelajari materi gradien.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <p>Buat Persamaan dengan memasukkan nilai m dan c ke dalam rumus y = mx + c untuk membuat jalur lintasan yang tepat.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <p>Terakhir, klik tombol <b>'Jalankan!'</b> agar Maya berjalan mengikuti garismu dan menemukan Telur Emasnya!.</p>
+                </div>
+            </div>
+
+            
+        </div>
+    </div> 
     <audio id="bg-music" src="assets/background-music.mp3" loop></audio>
     <audio id="sfx-correct" src="assets/correct-answer.mp3"></audio>
     <div id="settings-sidebar" class="settings-sidebar">
@@ -472,20 +506,27 @@
             </div>
         </div>
     </div>
-    <div id="activity-modal" class="modal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
-        <div class="contextual-box" style="width:90%; max-width:400px; margin:15% auto; background:#e8f5e9; border:3px solid #3a5a40; border-radius:20px; padding:20px;">
-            <h2 style="text-align: center; color: #3a5a40; font-family: 'Baloo 2';">
-                <i class="fas fa-users"></i> Aktivitas Grup
-            </h2>
-            
-            <p style="text-align:center; background:#3a5a40; color:white; padding:5px; border-radius:20px; font-size:14px;">
-                <span id="total-online-count">0</span> Penjelajah sedang online
-            </p>
+    <div id="activity-sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-users"></i> Aktivitas Grup</h3>
+            <button onclick="toggleActivitySidebar()" class="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
 
-            <div id="activity-list" style="max-height:300px; overflow-y:auto; margin-top:15px; padding-right:5px;">
+        <div class="online-status-bar">
+            <span class="online-dot"></span>
+            <span id="total-online-count">1</span> Penjelajah sedang online
+        </div>
+
+        <div id="activity-list" class="sidebar-content">
+            <div class="user-activity-card">
+                <div class="user-status-dot online"></div>
+                <div class="user-details">
+                    <strong>Fatma</strong>
+                    <p>Kelas 8A • Sedang Belajar 🦖</p>
                 </div>
-
-            <button onclick="document.getElementById('activity-modal').style.display='none'" style="width:100%; margin-top:15px; background:#3a5a40; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer; font-weight:bold;">TUTUP</button>
+            </div>
         </div>
     </div>
 
