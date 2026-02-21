@@ -2050,4 +2050,224 @@ canvas {
     border-color: #fbc02d; /* Berubah jadi Kuning Emas */
     box-shadow: 0 0 10px rgba(251, 192, 45, 0.3);
 }
+/* Latar Belakang Overlay (Gelap Transparan) */
+.guide-overlay {
+    display: none; /* Sembunyikan secara default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Efek blur di belakang modal */
+    justify-content: center;
+    align-items: center;
+}
 
+/* 2. KOTAK KECIL: Hanya untuk Card di dalam Help Modal */
+#help-modal .guide-card {
+    background: #ffffff;
+    border: 4px solid #3a5a40;
+    border-radius: 25px;
+    padding: 30px;
+    margin-top: 8vh !important;
+    
+    /* Ukuran kotak kecil yang serasi */
+    max-width: 600px; 
+    width: 90%;       
+    
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: auto !important; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    
+    /* Animasi muncul dari tengah */
+    animation: popCenter 0.3s ease-out;
+
+}
+
+/* Item Langkah-langkah */
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 18px;
+    padding: 12px 20px;
+    background: #f1f8e9; /* Hijau muda segar */
+    border-radius: 15px;
+    border-left: 6px solid #fbc02d;
+}
+
+.step-number {
+    background: #3a5a40;
+    color: #ffffff;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.step-item p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Tombol Tutup */
+.modal-close-x {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #3a5a40; /* Hijau Tua */
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+    line-height: 1;
+}
+
+.modal-close-x:hover {
+    color: #fbc02d; /* Berubah merah saat disorot */
+    transform: scale(1.2); /* Efek putar sedikit agar keren */
+}
+
+
+/* Animasi Slide In */
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+/* --- SIDEBAR AKTIVITAS GRUP --- */
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    right: -350px; /* Sembunyi di luar layar secara default [cite: 2026-02-15] */
+    width: 320px;
+    height: 100vh;
+    background-color: #f1f8e9; /* Hijau sangat muda */
+    border-left: 4px solid #3a5a40; /* Border hijau tua navigasi */
+    box-shadow: -5px 0 15px rgba(0,0,0,0.15);
+    z-index: 10000;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Munculkan sidebar saat aktif [cite: 2026-02-15] */
+.sidebar-container.active {
+    right: 0;
+}
+
+/* Header Sidebar (Warna Hijau Tua Navigasi) */
+.sidebar-header {
+    background-color: #3a5a40;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+}
+
+.close-sidebar-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Status Bar (Banner Online) [cite: 2026-02-15] */
+.online-status-bar {
+    padding: 10px 20px;
+    background-color: #dcedc8;
+    color: #3a5a40;
+    font-weight: bold;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.online-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+/* List Konten */
+.sidebar-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* Card User Kecil */
+.user-activity-card {
+    background: white;
+    border: 2px solid #3a5a40;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.2s;
+}
+
+.user-activity-card:hover {
+    transform: translateX(-5px);
+}
+
+.user-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.user-status-dot.online { background-color: #4caf50; }
+/* Titik status offline (Abu-abu) */
+.user-status-dot.offline {
+    background-color: #9e9e9e;
+    box-shadow: none; /* Hilangkan glow jika offline */
+}
+.user-details strong {
+    display: block;
+    color: #3a5a40;
+    font-size: 0.95rem;
+}
+
+.user-details p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
