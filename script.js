@@ -53,6 +53,7 @@ if (loginForm) {
 
         // PENTING: Panggil fungsi untuk memulai game kamu di sini!
         // Contoh: startGame() atau initGame()
+        kirimPing(); // Langsung kirim sinyal aktif saat masuk [cite: 2026-02-15]
         mulaiPermainanUtama(); 
     });
 }
@@ -63,53 +64,63 @@ function kirimPing() {
 
     fetch(scriptURL + '?action=ping&nama=' + encodeURIComponent(auth.nama) + '&kelas=' + auth.kelas, { method: 'POST' });
 }
+// --- KONTROL SIDEBAR AKTIVITAS ---
 
-// Jalankan ping otomatis setiap 60 detik
-setInterval(kirimPing, 60000);
-
-function bukaAktivitas() {
-    // 1. Tampilkan modal aktivitas
-    document.getElementById('activity-modal').style.display = 'block';
+function toggleActivitySidebar() {
+    const sidebar = document.getElementById('activity-sidebar');
     
+    if (!sidebar) {
+        console.error("Elemen activity-sidebar tidak ditemukan!");
+        return;
+    }
+
+    // Jika sidebar akan dibuka, ambil data terbaru
+    if (!sidebar.classList.contains('active')) {
+        muatDataAktivitas();
+    }
+    
+    // Menambah/menghapus class 'active' untuk efek geser [cite: 2026-02-15]
+    sidebar.classList.toggle('active');
+}
+
+function muatDataAktivitas() {
     const list = document.getElementById('activity-list');
     const totalCount = document.getElementById('total-online-count');
     
-    list.innerHTML = '<p style="text-align:center;">Mengecek aktivitas teman-teman... 🔍</p>';
-    totalCount.textContent = "0";
+    if (!list) return;
 
-    // 2. Ambil data dari Google Sheets dengan parameter action=status
+    list.innerHTML = '<p style="text-align:center; padding:20px; color:#666;">Mengecek... 🔍</p>';
+
     fetch(scriptURL + "?action=status")
         .then(res => res.json())
         .then(data => {
             list.innerHTML = '';
             let onlineNow = 0;
 
-            // 3. Urutkan agar yang online muncul di paling atas
+            // Urutkan: Online di paling atas [cite: 2026-02-15]
             data.sort((a, b) => b.isOnline - a.isOnline);
 
             data.forEach(user => {
                 if (user.isOnline) onlineNow++;
                 
-                const statusColor = user.isOnline ? '#4caf50' : '#9e9e9e'; // Hijau jika online, abu jika offline
-                const statusGlow = user.isOnline ? 'box-shadow: 0 0 8px #4caf50;' : '';
+                const statusClass = user.isOnline ? 'online' : 'offline';
+                const statusText = user.isOnline ? 'Sedang Belajar 🦖' : 'Sedang Istirahat';
 
                 list.innerHTML += `
-                    <div style="display:flex; align-items:center; background:white; margin-bottom:8px; padding:12px; border-radius:12px; border:1px solid #dcedc8;">
-                        <div style="width:12px; height:12px; border-radius:50%; background:${statusColor}; margin-right:15px; ${statusGlow}"></div>
-                        
-                        <div style="flex-grow: 1;">
-                            <b style="color: #3a5a40; display:block;">${user.nama}</b>
-                            <small style="color: #666;">Kelas ${user.kelas} • ${user.isOnline ? 'Sedang Belajar 🦖' : 'Sedang Istirahat'}</small>
+                    <div class="user-activity-card">
+                        <div class="user-status-dot ${statusClass}"></div>
+                        <div class="user-details">
+                            <strong>${user.nama}</strong>
+                            <p>Kelas ${user.kelas} • ${statusText}</p>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
 
-            // 4. Update total user yang sedang online
-            totalCount.textContent = onlineNow;
+            if (totalCount) totalCount.textContent = onlineNow;
         })
         .catch(err => {
-            list.innerHTML = '<p style="color:red; text-align:center;">Gagal memuat aktivitas. Periksa koneksi internet!</p>';
+            console.error("Gagal memuat data:", err);
+            list.innerHTML = '<p style="color:red; text-align:center; padding:20px;">Gagal memuat aktivitas!</p>';
         });
 }
 function switchTab(targetTab) {
@@ -218,31 +229,7 @@ function toggleMusic() {
         .then(response => console.log('Progres tersimpan!'))
         .catch(error => console.error('Gagal sinkronisasi!', error));
     }
-    function muatRanking() {
-        const rankingBody = document.getElementById('ranking-body');
-        rankingBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Memuat data...</td></tr>';
 
-        fetch(scriptURL) 
-            .then(response => response.json())
-            .then(data => {
-                rankingBody.innerHTML = '';
-                data.forEach((player, index) => {
-                    const row = `
-                        <tr style="border-bottom: 1px solid #dcedc8;">
-                            <td style="padding: 10px;">${index + 1}</td>
-                            <td style="padding: 10px;"><b>${player.nama}</b> <br> <small>${player.kelas}</small></td>
-                            <td style="padding: 10px; text-align: center;">${player.totalBintang} ⭐</td>
-                        </tr>
-                    `;
-                    rankingBody.innerHTML += row;
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                rankingBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:red;">Gagal memuat ranking.</td></tr>';
-            });
-    }
-    
 function bukaRanking() {
         document.getElementById('ranking-modal').style.display = 'block';
         const list = document.getElementById('ranking-list');
@@ -258,6 +245,8 @@ function bukaRanking() {
                     if (index === 0) medalColor = "#ffd700"; // Emas
                     else if (index === 1) medalColor = "#c0c0c0"; // Perak
                     else if (index === 2) medalColor = "#cd7f32"; // Perunggu
+
+                    let icon = (index === 0) ? "👑" : (index + 1);
 
                     const row = `
                         <tr style="border-bottom: 1px solid #dcedc8; background: ${index < 3 ? 'rgba(255,255,255,0.5)' : 'transparent'}">
@@ -287,7 +276,21 @@ function bukaRanking() {
         document.getElementById('ranking-modal').style.display = 'none';
     }
 
-    
+function openHelp() {
+    const modal = document.getElementById('help-modal');
+    if (modal) {
+        // WAJIB: Gunakan 'flex' agar modal bisa ke tengah
+        modal.style.setProperty('display', 'flex', 'important');
+    }
+}
+
+function closeHelp() {
+    const modal = document.getElementById('help-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+} 
+ 
 function showDetail(materiId) {
     const grid = document.getElementById('materi-grid');
     const detailView = document.getElementById('materi-detail-view');
@@ -1112,18 +1115,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const instruction = document.getElementById('level-instruction');
             
             if (levelNum <= 10) {
-                formModel1.style.display = 'flex';
-                formModel2.style.display = 'none';
-                instruction.textContent = "Lengkapi rumus y = mx + c di bawah ini!";
+                if(formModel1) formModel1.style.display = 'flex';
+                if(formModel2) formModel2.style.display = 'none';
+                instruction.textContent = "Selesaikan tantangan ini!";
             } else {
-                formModel1.style.display = 'none';
-                formModel2.style.display = 'flex';
+                if(formModel1) formModel1.style.display = 'none';
+                if(formModel2) formModel2.style.display = 'flex';
                 instruction.textContent = "Gunakan salah satu titik yang ada untuk melengkapi rumus di bawah!";
             }
         }
 
         p.draw = function() {
-            scale = p.width / 18; 
+            scale = p.width / 20; 
             origin = { x: p.width / 2, y: p.height / 2 };
             p.clear();
             drawGrid();
