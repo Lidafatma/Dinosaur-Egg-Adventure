@@ -1,3 +1,83 @@
+/* ============================================================ */
+/* OPTIMASI IPHONE: DESKTOP LOOK RESPONSIVE                     */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+    /* 1. Mencegah Teks Berubah Ukuran Otomatis di Safari iOS */
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* 2. Navigasi Tetap Menyamping (Kecilkan Skala) */
+    nav {
+        padding: 0.5rem 2%;
+    }
+    .nav-brand {
+        font-size: 1rem; /* Perkecil teks judul agar muat */
+    }
+    .nav-logo {
+        height: 35px;
+    }
+    .nav-links a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    /* 3. Peta Level (Tetap 4-5 Kolom agar seperti Desktop) [cite: 2026-02-15] */
+    #level-map-container {
+        grid-template-columns: repeat(4, 1fr) !important; /* Paksa 4 kolom di HP */
+        gap: 10px;
+        padding: 10px;
+    }
+    .level-card h3 {
+        font-size: 0.9rem; /* Perkecil tulisan agar pas di kotak kecil */
+    }
+
+    /* 4. Halaman Tentang (Tetap 3 Kolom menyamping) */
+    .cards-grid-container {
+        grid-template-columns: repeat(3, 1fr) !important; /* Tetap 3 kolom */
+        gap: 10px;
+    }
+    .premium-card {
+        padding: 20px 10px;
+    }
+    .premium-card h3 {
+        font-size: 1rem;
+    }
+    .premium-card p {
+        font-size: 0.8rem;
+    }
+
+    /* 5. Hero Section (Home) */
+    .hero-box-card {
+        border-radius: 0 0 30px 30px;
+        aspect-ratio: 16 / 10; /* Tetap lebar seperti desktop */
+    }
+    .hero-content h1 {
+        font-size: 1.5rem !important;
+    }
+    .hero-description {
+        font-size: 0.8rem;
+        max-width: 90%;
+    }
+
+    /* 6. Sidebar (Jangan terlalu lebar di iPhone) */
+    .sidebar-container, .settings-sidebar {
+        width: 280px !important;
+    }
+}
+
+/* Khusus iPhone Layar Sangat Kecil (SE/Mini) */
+@media (max-width: 480px) {
+    #level-map-container {
+        grid-template-columns: repeat(3, 1fr) !important; /* Minimal 3 kolom */
+    }
+    .nav-links {
+        display: flex;
+        overflow-x: auto; /* Jika menu terlalu banyak, bisa di-geser (scroll) */
+        white-space: nowrap;
+    }
+}
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Nunito:wght@400;700&display=swap');
 
 :root {
