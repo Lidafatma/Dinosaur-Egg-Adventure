@@ -35,6 +35,7 @@ let wrongAttempts = 0;
     ];
 // Pastikan baris ini menggunakan ID yang sama dengan di HTML
 const btnDubbing = document.getElementById('btn-dubbing');
+const audioPlayer = document.getElementById('audio-player');
 let currentLevelIndex = 0; 
 const loginForm = document.getElementById('login-form');
 
