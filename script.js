@@ -34,6 +34,8 @@ let wrongAttempts = 0;
         { start: {x: -4, y: -6}, end: {x: 8, y: 0}, solution: { m: 0.5, c: -4 } }// 25
     ];
 // Pastikan baris ini menggunakan ID yang sama dengan di HTML
+const btnDubbing = document.getElementById('btn-dubbing');
+let currentLevelIndex = 0; 
 const loginForm = document.getElementById('login-form');
 
 if (loginForm) {
@@ -1347,13 +1349,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Event Listener untuk Sakelar SFX di Sidebar
-    if (ui.sfxCheckbox) {
+     if (ui.sfxCheckbox) {
+        const originalSfxChange = ui.sfxCheckbox.onchange;
         ui.sfxCheckbox.onchange = () => {
-            sfxOn = ui.sfxCheckbox.checked;
-            // Update juga ikon volume di navbar agar sinkron
-            if (ui.sfxToggle) {
-                ui.sfxToggle.querySelector('i').className = sfxOn ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+            if (originalSfxChange) originalSfxChange();
+            
+            // Update tampilan tombol dubbing agar warnanya sesuai status SFX
+            if (btnDubbing) {
+                const icon = btnDubbing.querySelector('i');
+                if (sfxOn) {
+                    btnDubbing.className = 'btn-voice active';
+                    if (icon) icon.className = 'fas fa-volume-up';
+                } else {
+                    btnDubbing.className = 'btn-voice muted';
+                    if (icon) icon.className = 'fas fa-volume-mute';
+                    window.speechSynthesis.cancel();
+                }
             }
+        };
+    }
+    // Logika Klik Langsung pada Tombol Dubbing
+    if (btnDubbing) {
+        btnDubbing.onclick = () => {
+            // 1. Ambil ikon di dalam tombol
+            const icon = btnDubbing.querySelector('i');
+
+            // 2. Cek status saat ini berdasarkan class
+            const isMuted = btnDubbing.classList.contains('muted');
+
+            if (isMuted) {
+                // JIKA SEBELUMNYA MATI -> NYALAKAN
+                btnDubbing.classList.remove('muted');
+                btnDubbing.classList.add('active');
+                if (icon) icon.className = 'fas fa-volume-up';
+                
+                // Jalankan Text-to-Speech
+                const text = document.getElementById('hint-box').innerText;
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                window.speechSynthesis.speak(utterance);
+                
+                // Sinkronkan ke variabel global jika perlu
+                sfxOn = true; 
+            } else {
+                // JIKA SEBELUMNYA NYALA -> MATIKAN
+                btnDubbing.classList.remove('active');
+                btnDubbing.classList.add('muted');
+                if (icon) icon.className = 'fas fa-volume-mute';
+                
+                // Hentikan suara
+                window.speechSynthesis.cancel();
+                
+                // Sinkronkan ke variabel global jika perlu
+                sfxOn = false;
+            }
+            
+            // Update checkbox di sidebar agar sinkron
+            if (ui.sfxCheckbox) ui.sfxCheckbox.checked = sfxOn;
         };
     }
 
