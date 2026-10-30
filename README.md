@@ -25,7 +25,10 @@ JavaScript, HTML, CSS
 2. Buka `index.html` di browser
 
 ## Tangkapan Layar
-![screenshot](assets/ssdino.jpeg)
+<img src="assets/ssdino.jpeg" alt="screenshot" width="100">
+<img src="assets/ssdino (2).jpeg" alt="screenshot" width="100">
+<img src="assets/ssdino (3).jpeg" alt="screenshot" width="100">
+<img src="assets/ssdino (4).jpeg" alt="screenshot" width="100">
 
 ## Pengembang
 Ade Ziyana Walidah Fatma
