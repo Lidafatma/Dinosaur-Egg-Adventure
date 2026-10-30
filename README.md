@@ -28,10 +28,10 @@ JavaScript, HTML, CSS
 ## Tangkapan Layar
 
 <p align="center">
-  <img src="assets/ssdino.jpeg" alt="Screenshot 1" width="25%" />
-  <img src="assets/ssdino (2).jpeg" alt="Screenshot 2" width="25%" />
-  <img src="assets/ssdino (3).jpeg" alt="Screenshot 3" width="25%" />
-  <img src="assets/ssdino (4).jpeg" alt="Screenshot 3" width="25%" />
+  <img src="assets/ssdino.jpeg" alt="Screenshot 1" width="20%" />
+  <img src="assets/ssdino (2).jpeg" alt="Screenshot 2" width="20%" />
+  <img src="assets/ssdino (3).jpeg" alt="Screenshot 3" width="20%" />
+  <img src="assets/ssdino (4).jpeg" alt="Screenshot 3" width="20%" />
 </p>
 
 ## Pengembang
