@@ -25,10 +25,14 @@ JavaScript, HTML, CSS
 2. Buka `index.html` di browser
 
 ## Tangkapan Layar
-<img src="assets/ssdino.jpeg" alt="screenshot" width="100">
-<img src="assets/ssdino (2).jpeg" alt="screenshot" width="100">
-<img src="assets/ssdino (3).jpeg" alt="screenshot" width="100">
-<img src="assets/ssdino (4).jpeg" alt="screenshot" width="100">
+## Tangkapan Layar
+
+<p align="center">
+  <img src="assets/ssdino.jpeg" alt="Screenshot 1" width="25%" />
+  <img src="assets/ssdino (2).jpeg" alt="Screenshot 2" width="25%" />
+  <img src="assets/ssdino (3).jpeg" alt="Screenshot 3" width="25%" />
+  <img src="assets/ssdino (4).jpeg" alt="Screenshot 3" width="25%" />
+</p>
 
 ## Pengembang
 Ade Ziyana Walidah Fatma
