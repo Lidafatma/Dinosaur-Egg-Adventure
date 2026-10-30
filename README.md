@@ -25,7 +25,7 @@ JavaScript, HTML, CSS
 2. Buka `index.html` di browser
 
 ## Tangkapan Layar
-![screenshot](images/screenshot.png)
+![screenshot](assets/ssdino.jpeg)
 
 ## Pengembang
 Ade Ziyana Walidah Fatma
