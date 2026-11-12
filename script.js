@@ -6,34 +6,33 @@ let sfxOn = true;
 let wrongAttempts = 0;
 
 // ========== DATA LEVEL (25 Soal untuk Peta) ==========
-    const levels = [
-        { start: {x: -5, y: 3}, end: {x: 5, y: 3}, solution: { m: 0, c: 3 } },    // 1
-        { start: {x: 0, y: 0}, end: {x: 5, y: 5}, solution: { m: 1, c: 0 } },    // 2
-        { start: {x: 0, y: 0}, end: {x: 4, y: 8}, solution: { m: 2, c: 0 } },    // 3
-        { start: {x: 8, y: -5}, end: {x: -8, y: -5}, solution: { m: 0, c: -5 } },// 4
-        { start: {x: 0, y: 0}, end: {x: -5, y: 5}, solution: { m: -1, c: 0 } },  // 5
-        { start: {x: 0, y: 0}, end: {x: 3, y: -6}, solution: { m: -2, c: 0 } },  // 6
-        { start: {x: 0, y: 0}, end: {x: 8, y: 4}, solution: { m: 0.5, c: 0 } },  // 7
-        { start: {x: -4, y: -1}, end: {x: 4, y: 7}, solution: { m: 1, c: 3 } },  // 8
-        { start: {x: 0, y: -4}, end: {x: 6, y: -1}, solution: { m: 0.5, c: -4 }},// 9
-        { start: {x: 2, y: -2}, end: {x: -2, y: 6}, solution: { m: -2, c: 2 } }, // 10
-        { start: {x: 1, y: 4}, end: {x: 3, y: 8}, solution: { m: 2, c: 2 } },    // 11
-        { start: {x: 2, y: 5}, end: {x: -1, y: -4}, solution: { m: 3, c: -1 } }, // 12
-        { start: {x: 5, y: 2}, end: {x: -5, y: -2}, solution: { m: 0.4, c: 0 } },// 13
-        { start: {x: 0, y: 5}, end: {x: 5, y: 0}, solution: { m: -1, c: 5 } },   // 14
-        { start: {x: 2, y: 1}, end: {x: 4, y: 0}, solution: { m: -0.5, c: 2 } }, // 15
-        { start: {x: -5, y: 7}, end: {x: 1, y: -5}, solution: { m: -2, c: -3 } },// 16
-        { start: {x: -4, y: -5}, end: {x: 2, y: 4}, solution: { m: 1.5, c: 1 } },// 17
-        { start: {x: 3, y: -7}, end: {x: -5, y: 5}, solution: { m: -1.5, c: -2.5 } },// 18
-        { start: {x: -7, y: 1}, end: {x: 7, y: 8}, solution: { m: 0.5, c: 4.5 } },// 19
-        { start: {x: -3, y: 6}, end: {x: 6, y: 0}, solution: { m: -2/3, c: 4 } },// 20
-        { start: {x: -8, y: -2}, end: {x: 4, y: 2}, solution: { m: 1/3, c: 2/3 } },// 21
-        { start: {x: 5, y: 9}, end: {x: -1, y: -3}, solution: { m: 2, c: -1 } }, // 22
-        { start: {x: -2, y: 8}, end: {x: 3, y: -7}, solution: { m: -3, c: 2 } }, // 23
-        { start: {x: 9, y: 3}, end: {x: -6, y: -2}, solution: { m: 1/3, c: 0 } },// 24
-        { start: {x: -4, y: -6}, end: {x: 8, y: 0}, solution: { m: 0.5, c: -4 } }// 25
-    ];
-// Pastikan baris ini menggunakan ID yang sama dengan di HTML
+const levels = [
+    { start: {x: -5, y: 3}, end: {x: 5, y: 3}, solution: { m: 0, c: 3 }, img: 'assets/background.jpg' },     // 1
+    { start: {x: 0, y: 0}, end: {x: 5, y: 5}, solution: { m: 1, c: 0 }, img: 'assets/background.jpg' },     // 2
+    { start: {x: 0, y: 0}, end: {x: 4, y: 8}, solution: { m: 2, c: 0 }, img: 'assets/background.jpg' },     // 3
+    { start: {x: 8, y: -5}, end: {x: -8, y: -5}, solution: { m: 0, c: -5 }, img: 'assets/background.jpg' }, // 4
+    { start: {x: 0, y: 0}, end: {x: -5, y: 5}, solution: { m: -1, c: 0 }, img: 'assets/background.jpg' },  // 5
+    { start: {x: 0, y: 0}, end: {x: 3, y: -6}, solution: { m: -2, c: 0 }, img: 'assets/background.jpg' },  // 6
+    { start: {x: 0, y: 0}, end: {x: 8, y: 4}, solution: { m: 0.5, c: 0 }, img: 'assets/background.jpg' },  // 7
+    { start: {x: -4, y: -1}, end: {x: 4, y: 7}, solution: { m: 1, c: 3 }, img: 'assets/background.jpg' },   // 8
+    { start: {x: 0, y: -4}, end: {x: 6, y: -1}, solution: { m: 0.5, c: -4 }, img: 'assets/background.jpg' },// 9
+    { start: {x: 2, y: -2}, end: {x: -2, y: 6}, solution: { m: -2, c: 2 }, img: 'assets/background.jpg' },  // 10
+    { start: {x: 1, y: 4}, end: {x: 3, y: 8}, solution: { m: 2, c: 2 }, img: 'assets/background.jpg' },     // 11
+    { start: {x: 2, y: 5}, end: {x: -1, y: -4}, solution: { m: 3, c: -1 }, img: 'assets/background.jpg' }, // 12
+    { start: {x: 5, y: 2}, end: {x: -5, y: -2}, solution: { m: 0.4, c: 0 }, img: 'assets/background.jpg' },// 13
+    { start: {x: 0, y: 5}, end: {x: 5, y: 0}, solution: { m: -1, c: 5 }, img: 'assets/background.jpg' },    // 14
+    { start: {x: 2, y: 1}, end: {x: 4, y: 0}, solution: { m: -0.5, c: 2 }, img: 'assets/background.jpg' }, // 15
+    { start: {x: -5, y: 7}, end: {x: 1, y: -5}, solution: { m: -2, c: -3 }, img: 'assets/background.jpg' },// 16
+    { start: {x: -4, y: -5}, end: {x: 2, y: 4}, solution: { m: 1.5, c: 1 }, img: 'assets/background.jpg' },// 17
+    { start: {x: 3, y: -7}, end: {x: -5, y: 5}, solution: { m: -1.5, c: -2.5 }, img: 'assets/background.jpg' },// 18
+    { start: {x: -7, y: 1}, end: {x: 7, y: 8}, solution: { m: 0.5, c: 4.5 }, img: 'assets/background.jpg' },// 19
+    { start: {x: -3, y: 6}, end: {x: 6, y: 0}, solution: { m: -2/3, c: 4 }, img: 'assets/background.jpg' },// 20
+    { start: {x: -8, y: -2}, end: {x: 4, y: 2}, solution: { m: 1/3, c: 2/3 }, img: 'assets/background.jpg' },// 21
+    { start: {x: 5, y: 9}, end: {x: -1, y: -3}, solution: { m: 2, c: -1 }, img: 'assets/background.jpg' },  // 22
+    { start: {x: -2, y: 8}, end: {x: 3, y: -7}, solution: { m: -3, c: 2 }, img: 'assets/background.jpg' },   // 23
+    { start: {x: 9, y: 3}, end: {x: -6, y: -2}, solution: { m: 1/3, c: 0 }, img: 'assets/background.jpg' }, // 24
+    { start: {x: -4, y: -6}, end: {x: 8, y: 0}, solution: { m: 0.5, c: -4 }, img: 'assets/background.jpg' } // 25
+];// Pastikan baris ini menggunakan ID yang sama dengan di HTML
 const loginForm = document.getElementById('login-form');
 
 if (loginForm) {
