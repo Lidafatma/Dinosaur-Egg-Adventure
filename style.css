@@ -372,6 +372,123 @@ main {
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
+/* --- CONTAINER UTAMA --- */
+.about-modern-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
+}
+
+/* Judul Gaya 'Ayo Belajar!' */
+.premium-title {
+    color: #3a5a40; /* Hijau Tua */
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-transform: none; /* Tidak auto-kapital */
+}
+
+.premium-subtitle {
+    color: #689f38;
+    font-size: 1.4rem;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+}
+
+/* --- GRID SYSTEM --- */
+.cards-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    perspective: 1000px;
+}
+
+/* STYLE KARTU PREMIUM */
+.premium-card {
+    background: #ffffff;
+    border-radius: 35px;
+    padding: 50px 30px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(58, 90, 64, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Aksen Warna di Atas Kartu */
+.card-top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(to right, #3a5a40, #dcedc8); /* Gradasi Hijau */
+}
+
+.premium-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 50px rgba(58, 90, 64, 0.15);
+    border-color: #3a5a40;
+}
+
+/* Efek Kartu Tengah yang Sedikit Lebih Menonjol */
+.premium-card.highlight {
+    background-color: #f9fdf9;
+    border: 2px solid #3a5a40;
+}
+
+/* IKON LINGKARAN */
+.card-icon-circle {
+    width: 85px;
+    height: 85px;
+    background: #3a5a40;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(58, 90, 64, 0.3);
+}
+
+.premium-card h3 {
+    color: #3a5a40;
+    font-size: 1.7rem;
+    margin-bottom: 15px;
+}
+
+.premium-card p {
+    color: #444;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.dev-name {
+    font-weight: 800;
+    color: #3a5a40;
+    font-size: 1.2rem !important;
+    margin-bottom: 10px !important;
+}
+
+.simple-footer {
+    margin-top: 60px;
+    opacity: 0.4;
+    font-weight: 600;
+    color: #3a5a40;
+}
+
+/* Responsif HP */
+@media (max-width: 900px) {
+    .cards-grid-container { grid-template-columns: 1fr; }
+    .premium-title { font-size: 2.5rem; }
+}
 
 /* ============================================================
    8. GAME PETA LEVEL & CANVAS KOORDINAT (Responsif 1:1)
